@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".Myapp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launchersuper"
+        android:label="FinalFilm"
+        android:roundIcon="@mipmap/ic_launchersuper_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.OgandoBritoOsirisJuniorProyectoPMDM">
+        <activity
+            android:name=".DetalleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NavigationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PeliculasActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

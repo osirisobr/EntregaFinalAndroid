@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margen_pantalla_default_horizontal">16dp</dimen>
+    <dimen name="margen_pantalla_default_vertical">16dp</dimen>
+
+    <dimen name="imagen_lista_tamaño">64dp</dimen>
+    <dimen name="margen_horizontal_entre_edTexts">100dp</dimen>
+    <dimen name="margen_activity">16dp</dimen>
+</resources>

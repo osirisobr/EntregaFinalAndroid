@@ -1,0 +1,10 @@
+<resources>
+
+    <!-- Etiquetas -->
+
+    <string name="app_name">OgandoBritoOsirisJuniorProyectoPMDM</string>
+    <string name="hint_introducir_usuario">usuario</string>
+
+    <!-- Hint -->
+
+</resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <ImageView
+        android:id="@+id/ivCaratula"
+        android:layout_width="146dp"
+        android:layout_height="132dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvTituloAño"
+        android:layout_width="202dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:hint="Titulo (año)"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/ivCaratula"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDirector"
+        android:layout_width="202dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="4dp"
+        android:hint="Director"
+        app:layout_constraintEnd_toEndOf="@+id/tvGenero"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvGenero"
+        app:layout_constraintTop_toBottomOf="@+id/tvGenero" />
+
+    <TextView
+        android:id="@+id/tvGenero"
+        android:layout_width="201dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="12dp"
+        android:hint="Genero"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloAño"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloAño"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloAño" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
