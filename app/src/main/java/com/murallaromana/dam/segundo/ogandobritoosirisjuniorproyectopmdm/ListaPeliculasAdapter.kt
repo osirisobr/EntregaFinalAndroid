@@ -36,9 +36,9 @@ class ListaPeliculasAdapter(val peliculas : List<Pelicula>, val context: Context
         holder.tvDirector.setText(Pelicula.director)
         Picasso.get().load(Pelicula.url).into(holder.ivCaratula)
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetalleActivity::class.java)
-            intent.putExtra("pelicula",Pelicula)
-            holder.itemView.context.startActivity(intent)
+        val intent = Intent(holder.itemView.context, DetalleActivity::class.java)
+        intent.putExtra("pelicula",Pelicula)
+        holder.itemView.context.startActivity(intent)
         }
 
 

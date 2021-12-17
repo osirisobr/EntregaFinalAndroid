@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.system.Os.remove
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -12,6 +13,8 @@ import com.squareup.picasso.Picasso
 import java.lang.Exception
 
 class DetalleActivity : AppCompatActivity() {
+
+
 
     companion object {
 
@@ -24,12 +27,13 @@ class DetalleActivity : AppCompatActivity() {
 
     lateinit var ibLlamarDirectorD: ImageButton
     lateinit var ivCaratulaDetalle: ImageView
-    lateinit var tvDirectorDetalles: TextView
-    lateinit var tvTituloDetalle: TextView
-    lateinit var tvAñoPeliculaDetalle: TextView
-    lateinit var tvSinopsisDetalle: TextView
-    lateinit var tvGeneroDetalle: TextView
-    private lateinit var detallePelicula: Pelicula
+    lateinit var tvDirectorDetalles: EditText
+    lateinit var tvTituloDetalle: EditText
+    lateinit var etUrl: EditText
+    lateinit var tvAñoPeliculaDetalle:EditText
+    lateinit var tvSinopsisDetalle:EditText
+    lateinit var tvGeneroDetalle: EditText
+    private lateinit var pelicula: Pelicula
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +45,19 @@ class DetalleActivity : AppCompatActivity() {
         tvTituloDetalle = findViewById(R.id.tvAñoPeliculaDetalle)
         tvSinopsisDetalle = findViewById(R.id.tvSinopsisDetalles)
         tvGeneroDetalle = findViewById(R.id.tvGeneroDetalle)
+        etUrl = findViewById(R.id.etUrl)
+        pelicula = intent.extras?.get("pelicula") as Pelicula
+
         ibLlamarDirectorD.setOnClickListener(){
 
-            val telefono = "tel:604002983"
+            val telefono = "tel:604001000"
             startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(telefono)))
         }
+        tvTituloDetalle.isEnabled = false
+        tvGeneroDetalle.isEnabled = false
+        tvSinopsisDetalle.isEnabled = false
+        tvDirectorDetalles.isEnabled = false
+
 
 
     }
@@ -53,13 +65,13 @@ class DetalleActivity : AppCompatActivity() {
         super.onResume()
 
         if (intent.extras?.get("pelicula") != null) {
-            detallePelicula = intent.extras?.get("pelicula") as Pelicula
-            title = detallePelicula.titulo
-            tvGeneroDetalle.setText(detallePelicula.genero)
-            tvDirectorDetalles.setText(detallePelicula.director)
-            tvTituloDetalle.setText(detallePelicula.titulo)
-            tvSinopsisDetalle.setText(detallePelicula.sinopsis)
-            Picasso.get().load(detallePelicula.imagenPanoramica).into(ivCaratulaDetalle)
+            pelicula = intent.extras?.get("pelicula") as Pelicula
+            title = pelicula.titulo
+            tvGeneroDetalle.setText(pelicula.genero)
+            tvDirectorDetalles.setText(pelicula.director)
+            tvTituloDetalle.setText(pelicula.titulo)
+            tvSinopsisDetalle.setText(pelicula.sinopsis)
+            Picasso.get().load(pelicula.imagenPanoramica).into(ivCaratulaDetalle)
         } else {
             title = "nueva pelicula"
             tvTituloDetalle.isEnabled = true
@@ -97,6 +109,16 @@ class DetalleActivity : AppCompatActivity() {
         return true
     }
 
+
+
+
+
+
+
+
+
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_editar -> {
@@ -114,12 +136,12 @@ class DetalleActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_borrar -> {
-                Toast.makeText(this, "Pelicula borrada", Toast.LENGTH_SHORT).show()
+
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                 val dialog = builder.setTitle("Eliminar pelicula")
-                    .setMessage("Estas a punto de eliminar la pelicula " + detallePelicula.titulo + ". ¿Estas seguro?.")
+                    .setMessage("la pelicula " +pelicula.titulo + "sera eliminada. ¿Estas seguro?.")
                     .setPositiveButton("Aceptar") { _, _ ->
-                        //detallePelicula.remove(detallePelicula)
+                        App.peliculas.remove(pelicula)
                         Toast.makeText(this, "Película Borrada", Toast.LENGTH_SHORT).show()
                         finish()
                     }
@@ -127,7 +149,20 @@ class DetalleActivity : AppCompatActivity() {
                 dialog.show()
 
                 return true
+
+
             }
+
+
+
+
+
+
+
+
+
+
+
             R.id.action_guardar -> {
                 if (tvSinopsisDetalle.text.toString().isEmpty() || tvDirectorDetalles.text.toString()
                         .isEmpty() || tvDirectorDetalles.text.toString().isEmpty()
@@ -153,31 +188,30 @@ class DetalleActivity : AppCompatActivity() {
                 } else {
 
 
+                  /*    val peliculaCreada = Pelicula(
 
+
+                        tvTituloDetalle.text.toString(),
+                         tvGeneroDetalle.text.toString(),
+                        tvDirectorDetalles.text.toString(),
+                        "",
+                        etUrl.text.toString(),tvSinopsisDetalle.text.toString(),
+                        etUrl.text.toString()
+                    )
                     if (intent.extras?.get("pelicula") == null) {
-
+                        peliculaCreada.add(detallePelicula)
                     } else {
+                        val indicePeli = detallePelicula.indexOf(detallePelicula)
+                       detallePelicula[indicePeli] = peliculaCreada
                     }
                     Toast.makeText(this, "Película Guardada", Toast.LENGTH_SHORT).show()
                     finish()
-
-
+               */
                 }
                 return true
             }
-            R.id.action_llamar -> {
-                try {
-                }catch (exp: Exception){
-                    Toast.makeText(
-                        this,
-                        "Whatsapp no está instalado",
-                        Toast.LENGTH_LONG).show()
-                }
 
 
-
-                return true
-            }
             else -> {
                 return super.onOptionsItemSelected(item)
             }
