@@ -17,14 +17,10 @@ class DetalleActivity : AppCompatActivity() {
 
 
     companion object {
-
         var itemGuardar: MenuItem? = null
         var itemEditar: MenuItem? = null
         var itemBorrar: MenuItem? = null
-
     }
-
-
     lateinit var ibLlamarDirectorD: ImageButton
     lateinit var ivCaratulaDetalle: ImageView
     lateinit var tvDirectorDetalles: EditText
@@ -46,7 +42,6 @@ class DetalleActivity : AppCompatActivity() {
         tvSinopsisDetalle = findViewById(R.id.tvSinopsisDetalles)
         tvGeneroDetalle = findViewById(R.id.tvGeneroDetalle)
         etUrl = findViewById(R.id.etUrl)
-        pelicula = intent.extras?.get("pelicula") as Pelicula
 
         ibLlamarDirectorD.setOnClickListener(){
 
@@ -57,9 +52,6 @@ class DetalleActivity : AppCompatActivity() {
         tvGeneroDetalle.isEnabled = false
         tvSinopsisDetalle.isEnabled = false
         tvDirectorDetalles.isEnabled = false
-
-//a
-
     }
     override fun onResume() {
         super.onResume()
@@ -80,7 +72,6 @@ class DetalleActivity : AppCompatActivity() {
             tvDirectorDetalles.isEnabled = true
 
         }
-
 
 }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -109,20 +100,10 @@ class DetalleActivity : AppCompatActivity() {
         return true
     }
 
-
-
-
-
-
-
-
-
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_editar -> {
-                //cambio los campos a editables
+
                 tvTituloDetalle.isEnabled = true
                 tvGeneroDetalle.isEnabled = true
                 tvSinopsisDetalle.isEnabled = true
@@ -141,7 +122,7 @@ class DetalleActivity : AppCompatActivity() {
                 val dialog = builder.setTitle("Eliminar pelicula")
                     .setMessage("la pelicula " +pelicula.titulo + "sera eliminada. ¿Estas seguro?.")
                     .setPositiveButton("Aceptar") { _, _ ->
-                        App.peliculas.remove(pelicula)
+                    App.peliculas.remove(pelicula)
                         Toast.makeText(this, "Película Borrada", Toast.LENGTH_SHORT).show()
                         finish()
                     }
@@ -152,16 +133,6 @@ class DetalleActivity : AppCompatActivity() {
 
 
             }
-
-
-
-
-
-
-
-
-
-
 
             R.id.action_guardar -> {
                 if (tvSinopsisDetalle.text.toString().isEmpty() || tvDirectorDetalles.text.toString()
@@ -187,26 +158,6 @@ class DetalleActivity : AppCompatActivity() {
 
                 } else {
 
-
-                  /*    val peliculaCreada = Pelicula(
-
-
-                        tvTituloDetalle.text.toString(),
-                         tvGeneroDetalle.text.toString(),
-                        tvDirectorDetalles.text.toString(),
-                        "",
-                        etUrl.text.toString(),tvSinopsisDetalle.text.toString(),
-                        etUrl.text.toString()
-                    )
-                    if (intent.extras?.get("pelicula") == null) {
-                        peliculaCreada.add(detallePelicula)
-                    } else {
-                        val indicePeli = detallePelicula.indexOf(detallePelicula)
-                       detallePelicula[indicePeli] = peliculaCreada
-                    }
-                    Toast.makeText(this, "Película Guardada", Toast.LENGTH_SHORT).show()
-                    finish()
-               */
                 }
                 return true
             }

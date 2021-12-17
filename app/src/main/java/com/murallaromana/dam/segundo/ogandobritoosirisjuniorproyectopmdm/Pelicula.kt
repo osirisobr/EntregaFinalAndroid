@@ -2,7 +2,7 @@ package com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm
 
 import java.io.Serializable
 
-class Pelicula(
+data class Pelicula(
     var titulo: String,
     var genero: String,
     var director: String,

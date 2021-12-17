@@ -18,22 +18,22 @@
         />
 
     <EditText
-        android:id="@+id/tvDirectorDetalle"
+        android:id="@+id/etUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Director"
-        android:inputType="textImeMultiLine"
+        android:hint="URL imagen"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGeneroDetalle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDirectorDetalle" />
 
     <EditText
         android:id="@+id/tvAñoPeliculaDetalle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Titulo(Año)"
@@ -43,10 +43,22 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
+        android:id="@+id/tvDirectorDetalle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Director"
+        android:inputType="textImeMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvGeneroDetalle" />
+
+    <EditText
         android:id="@+id/tvGeneroDetalle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Genero"
@@ -58,7 +70,7 @@
         android:id="@+id/ibLlamarDirectorD"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="120dp"
         app:layout_constraintStart_toEndOf="@+id/tvDirectorDetalle"
         app:layout_constraintTop_toBottomOf="@+id/ivCaratulaDetalle"
@@ -77,17 +89,5 @@
         android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUrl" />
-
-    <EditText
-        android:id="@+id/etUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="URL imagen"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDirectorDetalle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

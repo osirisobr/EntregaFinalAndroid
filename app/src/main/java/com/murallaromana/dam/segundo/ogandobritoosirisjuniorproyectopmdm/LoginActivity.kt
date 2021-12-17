@@ -35,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-
         loadData2()
 
 
@@ -90,6 +89,8 @@ class LoginActivity : AppCompatActivity() {
     fun loadData2() {
 
         val sharedPreferences = getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE)
+
+
 
         val nombreL = sharedPreferences.getString("NOMBREL",null)
         val contraseñaL = sharedPreferences.getString("CONTRASEÑAL",null)

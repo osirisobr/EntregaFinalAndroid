@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.App.Companion.peliculas
 
-class PeliculasActivity : AppCompatActivity() {
+ class PeliculasActivity : AppCompatActivity() {
     private lateinit var rvPeliculas : RecyclerView
     private lateinit var faButton: FloatingActionButton
     private lateinit var adapter: ListaPeliculasAdapter
@@ -25,7 +25,7 @@ class PeliculasActivity : AppCompatActivity() {
         faButton = findViewById(R.id.faButton)
         val peliculasDao = PeliculasDaoMockImpl()
         val peliculas = peliculasDao.getTodos()
-        var adapter = ListaPeliculasAdapter(peliculas, this)
+        adapter = ListaPeliculasAdapter(peliculas, this)
         rvPeliculas.adapter = adapter
 
 
@@ -34,47 +34,20 @@ class PeliculasActivity : AppCompatActivity() {
             val intent = Intent(this, DetalleActivity::class.java)
             startActivity(intent)
 
-
         }
 
     }
 
 
+     override fun onResume() {
+         super.onResume()
+
+     }
 
 
 
 
 
-
-
-    override fun onBackPressed() {
-
-
-
-
-        if (true) {
-
-        } else {
-
-        }
-    }
-
-
-
-
-
-    fun saveData(){
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.apply(){
-            putString("NOMBREL",null)
-            putString("CONTRASEÑAL",null)
-        }.apply()
-
-        Toast.makeText(this,"Sesion Cerrada", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
 
 
 }
