@@ -58,7 +58,7 @@ class DetalleActivity : AppCompatActivity() {
         tvSinopsisDetalle.isEnabled = false
         tvDirectorDetalles.isEnabled = false
 
-
+//a
 
     }
     override fun onResume() {
