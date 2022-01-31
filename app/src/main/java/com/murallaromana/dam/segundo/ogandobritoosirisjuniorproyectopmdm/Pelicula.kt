@@ -1,9 +1,11 @@
 package com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Pelicula(
-    var titulo: String,
+
+    @SerializedName("title")  var titulo: String,
     var genero: String,
     var director: String,
     var año: String,

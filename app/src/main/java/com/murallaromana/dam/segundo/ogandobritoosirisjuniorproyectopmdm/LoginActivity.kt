@@ -5,11 +5,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Api
+import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.RetrofictClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
@@ -31,6 +39,26 @@ class LoginActivity : AppCompatActivity() {
         etNombreL = findViewById(R.id.etNombreL)
         etContraseñaL = findViewById(R.id.etContraseñaL)
         btAcceder = findViewById(R.id.btAcceder)
+        val context = this
+
+    val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjc5Nzc4ODgxM2Q2ZTRlNDVmZWQwMyIsImlhdCI6MTY0MzYxNjk0OSwiZXhwIjoxNjQzNzAzMzQ5fQ.HoOat_nZnc0RNDzCusn5uWsxoVDoAeC6Krxj8Ot0XVY")
+        llamadaAlApi.enqueue(object: Callback<List<Pelicula>> {
+            override fun onResponse(
+                call: Call<List<Pelicula>>,
+                response: Response<List<Pelicula>>
+
+            ) {  var respuesta = response.code().toString()
+
+
+                Toast.makeText(context, respuesta, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
+                Log.d("Prueba",t.message.toString())
+            }
+        } )
+
+
 
 
 
@@ -106,7 +134,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+        //configuroRetrofit
+    val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl("https://damapi.herokuapp.com/api/v1/")
+        .build()
 
+
+
+    val service = retrofit.create(Api::class.java)
+  //  val loginCall = service.login(u)
 
 
 
