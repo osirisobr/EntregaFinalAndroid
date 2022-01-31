@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Api
 import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.RetrofictClient
+import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Token
+import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Usuario
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,23 +42,53 @@ class LoginActivity : AppCompatActivity() {
         etContraseñaL = findViewById(R.id.etContraseñaL)
         btAcceder = findViewById(R.id.btAcceder)
         val context = this
+        var usuario = etNombreL.text.toString()
+        var contraseña = etContraseñaL.text.toString()
 
-    val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjc5Nzc4ODgxM2Q2ZTRlNDVmZWQwMyIsImlhdCI6MTY0MzYxNjk0OSwiZXhwIjoxNjQzNzAzMzQ5fQ.HoOat_nZnc0RNDzCusn5uWsxoVDoAeC6Krxj8Ot0XVY")
-        llamadaAlApi.enqueue(object: Callback<List<Pelicula>> {
-            override fun onResponse(
-                call: Call<List<Pelicula>>,
-                response: Response<List<Pelicula>>
+        val u = Usuario(usuario,contraseña)
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://damapi.herokuapp.com/api/v1/")
+            .build()
+        val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
+        val loginCall = service.login(u)
 
-            ) {  var respuesta = response.code().toString()
+        loginCall.enqueue(object: Callback<Token> {
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+                Log.d("respuesta: onFailure", t.toString())
 
-
-                Toast.makeText(context, respuesta, Toast.LENGTH_SHORT).show()
             }
 
-            override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
-                Log.d("Prueba",t.message.toString())
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                Log.d("respuesta: onResponse", response.toString())
+
+                if (response.code() > 299 || response.code() < 200) {
+                    // Muestro alerta: no se ha podido crear el usuario
+
+                } else {
+                    val token = response.body()?.token
+                    Log.d("respuesta: token:", token.orEmpty())
+
+                    // TODO: Muestro mensaje de usuario creado correctamente.
+
+                    // TODO: Guardo en sharedPreferences el token
+
+                    // TODO: Inicio nueva activity
+                }
+
             }
-        } )
+        })
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -70,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
 
             val nombreL = etNombreL.text.toString()
             val contraseñaL = etContraseñaL.text.toString()
-            val sharedPreferences = getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE)
+            val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
 
             val editor = sharedPreferences.edit()
             editor.apply(){
@@ -89,6 +121,81 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     fun loadData() {
 
         val sharedPreferences = getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE)
