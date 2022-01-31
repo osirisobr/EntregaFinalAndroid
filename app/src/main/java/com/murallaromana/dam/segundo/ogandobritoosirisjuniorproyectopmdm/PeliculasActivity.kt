@@ -25,7 +25,7 @@ class PeliculasActivity : AppCompatActivity() {
         rvPeliculas=findViewById(R.id.rvPeliculas)
         rvPeliculas.layoutManager = LinearLayoutManager(this)
         faButton = findViewById(R.id.faButton)
-//hello
+//helloo
 
         val context = this
 
