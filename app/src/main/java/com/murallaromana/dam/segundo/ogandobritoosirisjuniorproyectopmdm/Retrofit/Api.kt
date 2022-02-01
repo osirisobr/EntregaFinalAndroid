@@ -15,10 +15,8 @@ interface Api {
     fun getPeliculas(@Header("Authorization")token: String): Call<List<Pelicula>>
     @POST("users/login")
     fun login(@Body user: Usuario): Call<Token>
+    @POST("users/signup")
+    fun signup(@Body user: Usuario): Call<Unit>
 
-//KLK
-    /*
-
-    */
 
 }
