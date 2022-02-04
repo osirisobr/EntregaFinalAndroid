@@ -45,30 +45,15 @@ class LoginActivity : AppCompatActivity() {
         var usuario = etNombreL.text.toString()
         var contraseña = etContraseñaL.text.toString()
 
-        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjc5Nzc4ODgxM2Q2ZTRlNDVmZWQwMyIsImlhdCI6MTY0MzcwNDcxMiwiZXhwIjoxNjQzNzkxMTEyfQ.kpA3ZkCrKSNNFCWBGUT6IEAhdKQHvOOSh00t6pAyV9Q")
-        llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
-            override fun onResponse(
-                call: Call<List<Pelicula>>,
-                response: Response<List<Pelicula>>
-
-            ) {
-                if (response.isSuccessful){
-
-                    Toast.makeText(context,"codigo en el rango de 200", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(context, PeliculasActivity::class.java)
-                    startActivity(intent)
 
 
-                }
-                var listaPeliculas = response.body().toString()
 
-                Toast.makeText(context, listaPeliculas, Toast.LENGTH_SHORT).show()
-            }
 
-            override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
-                Log.d("Prueba",t.message.toString())
-            }
-        } )
+
+
+
+
+
 
 
 
@@ -80,18 +65,79 @@ class LoginActivity : AppCompatActivity() {
 
         btAcceder.setOnClickListener(){
 
-            val nombreL = etNombreL.text.toString()
-            val contraseñaL = etContraseñaL.text.toString()
-            val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+            val u = Usuario(usuario,contraseña)
+            val retrofit = Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://damapi.herokuapp.com/api/v1/")
+                .build()
+            val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
+            val loginCall = service.login(u)
 
-            val editor = sharedPreferences.edit()
-            editor.apply(){
-                putString("NOMBREL",nombreL)
-                putString("CONTRASEÑAL",contraseñaL)
-            }.apply()
+            loginCall.enqueue(object: Callback<Token> {
+                override fun onFailure(call: Call<Token>, t: Throwable) {
+                    Log.d("respuesta: onFailure", t.toString())
+
+                }
+
+                override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                    Log.d("respuesta: onResponse", response.toString())
+
+                    if (response.code() > 299 || response.code() < 200) {
+                        // Muestro alerta: no se ha podido crear el usuario
+                        Toast.makeText(context,"no se ha podido acceder", Toast.LENGTH_SHORT).show()
+
+                    } else {
+                        val token = response.body()?.token
+                        Log.d("respuesta: token:", token.orEmpty())
+
+                        val Token = token
+                        val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+
+                        val editor = sharedPreferences.edit()
+                        editor.apply(){
+                            putString("TOKEN",token)
+                        }.apply()
 
 
-            loadData()
+                        // TODO: Muestro mensaje de usuario creado correctamente.
+
+                        // TODO: Guardo en sharedPreferences el token
+
+                        // TODO: Inicio nueva activity
+                    }
+
+                }
+            })
+            //hio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         }
 
@@ -101,6 +147,76 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -161,6 +277,23 @@ class LoginActivity : AppCompatActivity() {
 
     val service = retrofit.create(Api::class.java)
   //  val loginCall = service.login(u)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     private fun showAlert(message: String) {

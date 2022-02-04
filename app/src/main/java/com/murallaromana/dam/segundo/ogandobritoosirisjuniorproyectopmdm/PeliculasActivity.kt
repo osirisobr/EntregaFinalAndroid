@@ -25,7 +25,7 @@ class PeliculasActivity : AppCompatActivity() {
         rvPeliculas=findViewById(R.id.rvPeliculas)
         rvPeliculas.layoutManager = LinearLayoutManager(this)
         faButton = findViewById(R.id.faButton)
-
+//helloo
 
         val context = this
 
@@ -33,7 +33,29 @@ class PeliculasActivity : AppCompatActivity() {
             val intent = Intent(this, DetalleActivity::class.java)
             startActivity(intent)
         }
+        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjc5Nzc4ODgxM2Q2ZTRlNDVmZWQwMyIsImlhdCI6MTY0MzYxNjk0OSwiZXhwIjoxNjQzNzAzMzQ5fQ.HoOat_nZnc0RNDzCusn5uWsxoVDoAeC6Krxj8Ot0XVY")
+        llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
+            override fun onResponse(
+                call: Call<List<Pelicula>>,
+                response: Response<List<Pelicula>>
 
+            ) {
+                if (response.isSuccessful){
+
+
+
+
+
+                }
+                var listaPeliculas = response.body().toString()
+
+                Toast.makeText(context, listaPeliculas, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
+                Log.d("Prueba",t.message.toString())
+            }
+        } )
 
     }
 

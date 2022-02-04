@@ -25,70 +25,41 @@ class RegistroActivity : AppCompatActivity() {
     lateinit var btHacerEfectivoRegistro: Button
     lateinit var etEmail: EditText
     lateinit var etContraseñaR: EditText
-
+        val token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
         btHacerEfectivoRegistro=findViewById(R.id.btHacerEfectivoRegistro)
-        etEmail=findViewById(R.id.etNombreR)
+        etEmail=findViewById(R.id.etEmail)
         etContraseñaR=findViewById(R.id.etContraseñaR)
         val context = this
 
         btHacerEfectivoRegistro.setOnClickListener(){
-            saveData()
-            onBackPressed()
 
 
-            var usuario = etEmail.text.toString()
-            var contraseña = etContraseñaR.text.toString()
-
-            val u = Usuario(usuario,contraseña)
+            val u = Usuario("hola123@gmail.com","1234")
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl("https://damapi.herokuapp.com/api/v1/")
                 .build()
-            val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
-
-
-            llamadaApi.enqueue(object: Callback<Token> {
-                override fun onFailure(call: Call<Token>, t: Throwable) {
+            val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.signup(u)
+            llamadaApi.enqueue(object: Callback<Unit> {
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
                     Log.d("respuesta: onFailure", t.toString())
-
                 }
-
-                override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                     Log.d("respuesta: onResponse", response.toString())
-
                     if (response.code() > 299 || response.code() < 200) {
-                        showAlert("Usuario ")
-
+                        // Muestro alerta: no se ha podido crear el usuario
+                        showAlert("No se ha podido crear el usuario")
                     } else {
-                        val token = response.body()?.token
-                        Log.d("respuesta: token:", token.orEmpty())
+                        Toast.makeText(context,"Usuario creado correctamente", Toast.LENGTH_SHORT).show()
 
-                       showAlert("Usuario creado correctamente")
+                        // TODO: Muestro mensaje de usuario creado correctamente.
 
-
-
-
-                        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-                        val editor = sharedPreferences.edit()
-                        editor.apply(){
-                            putString("TOKEN",token)
-                        }.apply()
-                        val intent = Intent(context, PeliculasActivity::class.java)
-                        startActivity(intent)
-                        Toast.makeText(context,"datos Guardados", Toast.LENGTH_SHORT).show()
-
-
-
-
-
-
-
-
+                        // TODO: Guardo en sharedPreferences el token
 
                         // TODO: Inicio nueva activity
                     }
@@ -97,15 +68,53 @@ class RegistroActivity : AppCompatActivity() {
             })
 
 
-
-
-
-
-
+            saveData()
+            onBackPressed()
         }
 
-    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
     fun saveData(){
         val nombreR = etEmail.text.toString()
         val contraseñaR = etContraseñaR.text.toString()
@@ -119,6 +128,8 @@ class RegistroActivity : AppCompatActivity() {
         Toast.makeText(this,"datos Guardados", Toast.LENGTH_SHORT).show()
 
     }
+
+
 
     private fun showAlert(message: String){
         val builder = AlertDialog.Builder(this)
