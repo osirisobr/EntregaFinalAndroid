@@ -33,7 +33,7 @@ class PeliculasActivity : AppCompatActivity() {
             val intent = Intent(this, DetalleActivity::class.java)
             startActivity(intent)
         }
-        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjc5Nzc4ODgxM2Q2ZTRlNDVmZWQwMyIsImlhdCI6MTY0MzYxNjk0OSwiZXhwIjoxNjQzNzAzMzQ5fQ.HoOat_nZnc0RNDzCusn5uWsxoVDoAeC6Krxj8Ot0XVY")
+        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjhmMDc2MGFiYjI3OGE5YzQ1Mjg3NSIsImlhdCI6MTY0Mzk3NTIzMiwiZXhwIjoxNjQ0MDYxNjMyfQ.XsoWD3dC2Imixsjebx9g1kDXi8ty6OwYGzaGcLbEhYk")
         llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
             override fun onResponse(
                 call: Call<List<Pelicula>>,
@@ -43,7 +43,7 @@ class PeliculasActivity : AppCompatActivity() {
                 if (response.isSuccessful){
 
 
-
+                    Toast.makeText(context,"", Toast.LENGTH_LONG).show()
 
 
                 }
@@ -62,6 +62,14 @@ class PeliculasActivity : AppCompatActivity() {
 
      override fun onResume() {
          super.onResume()
+
+
+
+
+
+
+
+
 
      }
 

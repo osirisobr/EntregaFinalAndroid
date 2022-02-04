@@ -42,11 +42,10 @@ class LoginActivity : AppCompatActivity() {
         etContraseñaL = findViewById(R.id.etContraseñaL)
         btAcceder = findViewById(R.id.btAcceder)
         val context = this
-        var usuario = etNombreL.text.toString()
-        var contraseña = etContraseñaL.text.toString()
 
 
-
+        etNombreL.setText("hola@hotmail.com")
+        etContraseñaL.setText("1234")
 
 
 
@@ -65,22 +64,20 @@ class LoginActivity : AppCompatActivity() {
 
         btAcceder.setOnClickListener(){
 
-            val u = Usuario(usuario,contraseña)
-            val retrofit = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://damapi.herokuapp.com/api/v1/")
-                .build()
-            val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
-            val loginCall = service.login(u)
+            var usuario = etNombreL.text.toString()
+            var contraseña = etContraseñaL.text.toString()
 
-            loginCall.enqueue(object: Callback<Token> {
+            val u = Usuario(usuario,contraseña)
+            val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
+
+            llamadaApi.enqueue(object: Callback<Token> {
                 override fun onFailure(call: Call<Token>, t: Throwable) {
-                    Log.d("respuesta: onFailure", t.toString())
+                        Log.d("respuesta: onFailure", t.toString())
 
                 }
 
                 override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                    Log.d("respuesta: onResponse", response.toString())
+                        Log.d("respuesta: onResponse", response.toString())
 
                     if (response.code() > 299 || response.code() < 200) {
                         // Muestro alerta: no se ha podido crear el usuario
@@ -89,15 +86,13 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         val token = response.body()?.token
                         Log.d("respuesta: token:", token.orEmpty())
-
-                        val Token = token
                         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-
                         val editor = sharedPreferences.edit()
                         editor.apply(){
                             putString("TOKEN",token)
                         }.apply()
-
+                        val intent = Intent(context, PeliculasActivity::class.java)
+                        startActivity(intent)
 
                         // TODO: Muestro mensaje de usuario creado correctamente.
 
@@ -265,18 +260,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-
-
-        //configuroRetrofit
-    val retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://damapi.herokuapp.com/api/v1/")
-        .build()
-
-
-
-    val service = retrofit.create(Api::class.java)
-  //  val loginCall = service.login(u)
 
 
 

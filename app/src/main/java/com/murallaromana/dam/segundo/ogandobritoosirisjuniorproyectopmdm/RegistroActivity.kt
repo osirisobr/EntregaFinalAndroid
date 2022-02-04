@@ -25,7 +25,7 @@ class RegistroActivity : AppCompatActivity() {
     lateinit var btHacerEfectivoRegistro: Button
     lateinit var etEmail: EditText
     lateinit var etContraseñaR: EditText
-        val token = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,85 +36,57 @@ class RegistroActivity : AppCompatActivity() {
         etContraseñaR=findViewById(R.id.etContraseñaR)
         val context = this
 
+        etEmail.setText("hola1@hotmail.com")
+        etContraseñaR.setText("1234")
+
         btHacerEfectivoRegistro.setOnClickListener(){
+            saveData()
+            onBackPressed()
 
 
-            val u = Usuario("hola123@gmail.com","1234")
+            var usuario = etEmail.text.toString()
+            var contraseña = etContraseñaR.text.toString()
+
+            val u = Usuario(usuario,contraseña)
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl("https://damapi.herokuapp.com/api/v1/")
                 .build()
             val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.signup(u)
+
+
             llamadaApi.enqueue(object: Callback<Unit> {
                 override fun onFailure(call: Call<Unit>, t: Throwable) {
                     Log.d("respuesta: onFailure", t.toString())
+
                 }
+
                 override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                     Log.d("respuesta: onResponse", response.toString())
+
                     if (response.code() > 299 || response.code() < 200) {
-                        // Muestro alerta: no se ha podido crear el usuario
-                        showAlert("No se ha podido crear el usuario")
+                        showAlert("Usuario ")
+
                     } else {
-                        Toast.makeText(context,"Usuario creado correctamente", Toast.LENGTH_SHORT).show()
 
-                        // TODO: Muestro mensaje de usuario creado correctamente.
+                       showAlert("Usuario creado correctamente")
 
-                        // TODO: Guardo en sharedPreferences el token
 
-                        // TODO: Inicio nueva activity
                     }
 
                 }
             })
 
 
-            saveData()
-            onBackPressed()
+
+
+
+
+
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
     fun saveData(){
         val nombreR = etEmail.text.toString()
         val contraseñaR = etContraseñaR.text.toString()
@@ -128,8 +100,6 @@ class RegistroActivity : AppCompatActivity() {
         Toast.makeText(this,"datos Guardados", Toast.LENGTH_SHORT).show()
 
     }
-
-
 
     private fun showAlert(message: String){
         val builder = AlertDialog.Builder(this)
