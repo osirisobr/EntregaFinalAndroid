@@ -6,7 +6,7 @@ class PeliculasDaoMockImpl : PeliculasData {
 
     override fun getTodos(): ArrayList<Pelicula> {
         list.addAll(
-            listOf(
+            listOf(/*
 
                     Pelicula(
                         "Los otros(2001)",
@@ -43,7 +43,7 @@ class PeliculasDaoMockImpl : PeliculasData {
                         "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/815jGGCOfEGTBKH4yQ18Eie3J5m.jpg",
                         "Chicago, años 30. Impera la 'Ley seca', que prohíbe la venta de alcohol. El idealista agente federal Eliot Ness (Kevin Costner) persigue implacablemente al gángster Al Capone (Robert De Niro), amo absoluto del crimen organizado en la ciudad. La falta de pruebas le impide acusarlo de asesinato, extorsión y comercio ilegal de alcohol, pero Ness, con la ayuda de un par de intachables policías (Andy Garcia y Charles Martin Smith) reclutados con la ayuda de un astuto agente (Sean Connery), intentará encontrar algún medio para inculparlo por otra clase de delitos.",
                         "https://i2.wp.com/www.8sorbosdeinspiracion.com/wp-content/uploads/2017/12/8sorbos-cine-Los-intocables-de-Elliot-Ness.jpg?w=897"
-                    )
+                    )*/
                 )
             )
 

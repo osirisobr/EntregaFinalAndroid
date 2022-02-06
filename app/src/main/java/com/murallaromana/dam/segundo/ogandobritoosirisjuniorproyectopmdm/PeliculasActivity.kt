@@ -1,9 +1,11 @@
 package com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +19,7 @@ class PeliculasActivity : AppCompatActivity() {
     private lateinit var rvPeliculas : RecyclerView
     private lateinit var faButton: FloatingActionButton
     private lateinit var adapter: ListaPeliculasAdapter
+    private lateinit var tvPrueba: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +28,23 @@ class PeliculasActivity : AppCompatActivity() {
         rvPeliculas=findViewById(R.id.rvPeliculas)
         rvPeliculas.layoutManager = LinearLayoutManager(this)
         faButton = findViewById(R.id.faButton)
-//helloo
+
+
+
 
         val context = this
 
+
         faButton.setOnClickListener() {
             val intent = Intent(this, DetalleActivity::class.java)
-            startActivity(intent)
-        }
-        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjhmMDc2MGFiYjI3OGE5YzQ1Mjg3NSIsImlhdCI6MTY0Mzk3NTIzMiwiZXhwIjoxNjQ0MDYxNjMyfQ.XsoWD3dC2Imixsjebx9g1kDXi8ty6OwYGzaGcLbEhYk")
+            startActivity(intent) }
+
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+
+        val Token ="Bearer " + sharedPreferences.getString("TOKEN",null)
+        Toast.makeText(context,Token, Toast.LENGTH_LONG).show()
+
+        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas(Token.toString())
         llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
             override fun onResponse(
                 call: Call<List<Pelicula>>,
@@ -41,15 +52,20 @@ class PeliculasActivity : AppCompatActivity() {
 
             ) {
                 if (response.isSuccessful){
-
-
                     Toast.makeText(context,"", Toast.LENGTH_LONG).show()
-
-
                 }
-                var listaPeliculas = response.body().toString()
+                var listaPeliculas: List<Pelicula>? = response.body()
 
-                Toast.makeText(context, listaPeliculas, Toast.LENGTH_SHORT).show()
+                var adapter = ListaPeliculasAdapter(listaPeliculas,context)
+                rvPeliculas.adapter = adapter
+
+
+
+
+
+
+             //   Toast.makeText(context, listaPeliculas, Toast.LENGTH_SHORT).show()
+
             }
 
             override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
@@ -58,18 +74,18 @@ class PeliculasActivity : AppCompatActivity() {
         } )
 
     }
+    fun loadData() {
+
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+
+        val nombreL = sharedPreferences.getString("TOKEN",null)
+
+
+    }
 
 
      override fun onResume() {
          super.onResume()
-
-
-
-
-
-
-
-
 
      }
 

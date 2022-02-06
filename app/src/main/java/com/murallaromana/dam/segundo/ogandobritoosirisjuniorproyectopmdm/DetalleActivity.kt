@@ -4,13 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.system.Os.remove
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.squareup.picasso.Picasso
-import java.lang.Exception
 
 class DetalleActivity : AppCompatActivity() {
 
@@ -63,7 +61,7 @@ class DetalleActivity : AppCompatActivity() {
             tvDirectorDetalles.setText(pelicula.director)
             tvTituloDetalle.setText(pelicula.titulo)
             tvSinopsisDetalle.setText(pelicula.sinopsis)
-            Picasso.get().load(pelicula.imagenPanoramica).into(ivCaratulaDetalle)
+            Picasso.get().load(pelicula.url).into(ivCaratulaDetalle)
         } else {
             title = "nueva pelicula"
             tvTituloDetalle.isEnabled = true

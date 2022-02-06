@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btAcceder: Button
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_OgandoBritoOsirisJuniorProyectoPMDM)
         super.onCreate(savedInstanceState)
@@ -44,21 +43,10 @@ class LoginActivity : AppCompatActivity() {
         val context = this
 
 
-        etNombreL.setText("hola@hotmail.com")
+
+        etNombreL.setText("hola@gmail.com")
         etContraseñaL.setText("1234")
-
-
-
-
-
-
-
-
-
-
-
-
-
+        btAcceder.animate().alphaBy(5.02f)
         loadData2()
 
 
@@ -84,7 +72,9 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(context,"no se ha podido acceder", Toast.LENGTH_SHORT).show()
 
                     } else {
-                        val token = response.body()?.token
+
+                        val token: String? = response.body()?.token
+
                         Log.d("respuesta: token:", token.orEmpty())
                         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
@@ -105,35 +95,6 @@ class LoginActivity : AppCompatActivity() {
             })
             //hio
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
         btRegistrarse.setOnClickListener() {
@@ -141,77 +102,9 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

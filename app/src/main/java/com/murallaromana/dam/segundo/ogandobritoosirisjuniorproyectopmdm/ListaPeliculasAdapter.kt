@@ -9,16 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import java.nio.file.Files.size
 
-class ListaPeliculasAdapter(val peliculas : List<Pelicula>, val context: Context) : RecyclerView.Adapter<ListaPeliculasAdapter.PeliculaHolder>() {
+class ListaPeliculasAdapter(val peliculas : List<Pelicula>?, val context: Context) : RecyclerView.Adapter<ListaPeliculasAdapter.PeliculaHolder>() {
 
 
     class PeliculaHolder  (view: View) : RecyclerView.ViewHolder(view){
         val tvTitulo = view.findViewById<TextView>(R.id.tvTituloAño)
-        val tvGenero = itemView.findViewById<TextView>(R.id.tvGenero)
-        val tvDirector = itemView.findViewById<TextView>(R.id.tvDirector)
+        val tvGenero = itemView.findViewById<TextView>(R.id.tvDuracion)
+        val tvDirector = itemView.findViewById<TextView>(R.id.tvRating)
         val ivCaratula = itemView.findViewById<ImageView>(R.id.ivCaratula)
+        val tvRating = view.findViewById<TextView>(R.id.tvRating)
 
     }
 
@@ -29,12 +29,13 @@ class ListaPeliculasAdapter(val peliculas : List<Pelicula>, val context: Context
     }
 
     override fun onBindViewHolder(holder: PeliculaHolder, position: Int) {
-        val Pelicula = peliculas.get(position)
+        val Pelicula = peliculas?.get(position)
 
-        holder.tvTitulo.setText(Pelicula.titulo)
-        holder.tvGenero.setText(Pelicula.genero)
-        holder.tvDirector.setText(Pelicula.director)
-        Picasso.get().load(Pelicula.url).into(holder.ivCaratula)
+        holder.tvTitulo.setText(Pelicula?.titulo)
+        holder.tvGenero.setText(Pelicula?.genero)
+        holder.tvDirector.setText(Pelicula?.director)
+        holder.tvRating.setText(Pelicula?.rating)
+        Picasso.get().load(Pelicula?.url).into(holder.ivCaratula)
         holder.itemView.setOnClickListener {
         val intent = Intent(holder.itemView.context, DetalleActivity::class.java)
         intent.putExtra("pelicula",Pelicula)
@@ -45,7 +46,7 @@ class ListaPeliculasAdapter(val peliculas : List<Pelicula>, val context: Context
     }
 
     override fun getItemCount(): Int{
-        return peliculas.size
+        return peliculas!!.size
     }
 
 

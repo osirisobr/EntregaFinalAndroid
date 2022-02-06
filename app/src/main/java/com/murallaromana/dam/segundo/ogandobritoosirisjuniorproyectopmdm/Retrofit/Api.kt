@@ -1,7 +1,6 @@
 package com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit
 
 import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Pelicula
-
 import retrofit2.http.GET
 import retrofit2.Call
 import retrofit2.http.Body

@@ -21,7 +21,7 @@
         android:id="@+id/tvTituloAño"
         android:layout_width="202dp"
         android:layout_height="31dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:hint="Titulo (año)"
         android:textSize="20dp"
@@ -29,22 +29,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvDirector"
-        android:layout_width="202dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="4dp"
-        android:hint="Director"
-        app:layout_constraintEnd_toEndOf="@+id/tvGenero"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvGenero"
-        app:layout_constraintTop_toBottomOf="@+id/tvGenero" />
+        android:id="@+id/tvRating"
+        android:layout_width="50dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="8dp"
+        android:hint="Rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.397"
+        app:layout_constraintStart_toEndOf="@+id/tvDuracion"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloAño" />
 
     <TextView
-        android:id="@+id/tvGenero"
-        android:layout_width="201dp"
-        android:layout_height="21dp"
+        android:id="@+id/tvDuracion"
+        android:layout_width="121dp"
+        android:layout_height="23dp"
         android:layout_marginTop="12dp"
-        android:hint="Genero"
+        android:hint="Duracion"
         app:layout_constraintEnd_toEndOf="@+id/tvTituloAño"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvTituloAño"

@@ -6,12 +6,13 @@ import java.io.Serializable
 data class Pelicula(
 
     @SerializedName("title")  var titulo: String,
-    var genero: String,
-    var director: String,
-    var año: String,
-    var url: String,
-    var sinopsis: String,
-    var imagenPanoramica: String
+    @SerializedName("rating")  var rating: String,
+    @SerializedName("genre")  var genero: String,
+    @SerializedName("directorFullname")  var director: String,
+    @SerializedName("releaseYear")  var año: String,
+    @SerializedName("imageUrl")  var url: String,
+    @SerializedName("descrption")  var sinopsis: String,
+  //  @SerializedName("title")  var imagenPanoramica: String
 
 ): Serializable {
 
@@ -33,11 +34,11 @@ data class Pelicula(
         return sinopsis
     }
 
-    fun imagenPanoramica(): String{
+    /*fun imagenPanoramica(): String{
 
        return imagenPanoramica
 
-    }
+    }*/
 
 
 
