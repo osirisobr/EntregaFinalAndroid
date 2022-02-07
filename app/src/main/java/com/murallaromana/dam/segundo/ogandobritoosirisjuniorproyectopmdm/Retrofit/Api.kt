@@ -16,6 +16,7 @@ interface Api {
     fun login(@Body user: Usuario): Call<Token>
     @POST("users/signup")
     fun signup(@Body user: Usuario): Call<Unit>
-
+    @POST("movies/")
+    fun create(@Body pelicula: Pelicula, @Header("Authorization")token: String ): Call<Unit>
 
 }

@@ -11,8 +11,9 @@ data class Pelicula(
     @SerializedName("directorFullname")  var director: String,
     @SerializedName("releaseYear")  var año: String,
     @SerializedName("imageUrl")  var url: String,
-    @SerializedName("descrption")  var sinopsis: String,
+    @SerializedName("description")  var sinopsis: String,
     @SerializedName("runtimeMinutes")  var duracion: String,
+    @SerializedName("directorPhone")  var numeroDirector: String,
   //  @SerializedName("title")  var imagenPanoramica: String
 
 ): Serializable {

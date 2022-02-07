@@ -59,11 +59,6 @@ class PeliculasActivity : AppCompatActivity() {
                 var adapter = ListaPeliculasAdapter(listaPeliculas,context)
                 rvPeliculas.adapter = adapter
 
-
-
-
-
-
              //   Toast.makeText(context, listaPeliculas, Toast.LENGTH_SHORT).show()
 
             }
