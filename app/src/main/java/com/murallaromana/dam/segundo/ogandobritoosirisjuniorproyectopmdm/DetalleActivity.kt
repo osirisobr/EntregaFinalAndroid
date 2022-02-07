@@ -187,6 +187,8 @@ class DetalleActivity : AppCompatActivity() {
                         .baseUrl("https://damapi.herokuapp.com/api/v1/")
                         .build()
                     val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.create(
+                        //Terminar de rellenar
+
                         Pelicula(tvTituloDetalle.text.toString(),"8","Accion","Sakamoto","2000","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/e9UQGoX2ZFNdrjLwEejMSMDSxmR.jpg","100 participantes, uno sobrevive","456","9375638273")
                         ,Token.toString())
 
