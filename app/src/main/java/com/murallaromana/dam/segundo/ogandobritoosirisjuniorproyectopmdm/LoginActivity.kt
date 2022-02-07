@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         etNombreL.setText("hola@gmail.com")
         etContraseñaL.setText("1234")
         btAcceder.animate().alphaBy(5.02f)
-        loadData2()
+
 
 
         btAcceder.setOnClickListener(){
@@ -74,7 +74,6 @@ class LoginActivity : AppCompatActivity() {
                     } else {
 
                         val token: String? = response.body()?.token
-
                         Log.d("respuesta: token:", token.orEmpty())
                         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
@@ -107,11 +106,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    fun loadToken(){
 
 
 
-    fun loadData() {
+    }
 
+
+
+
+
+    /*fun loadData() {
+                                //SharedPreferences
         val sharedPreferences = getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE)
 
         val nombreL = sharedPreferences.getString("NOMBREL",null)
@@ -152,24 +158,7 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }*/
 
 
     private fun showAlert(message: String) {

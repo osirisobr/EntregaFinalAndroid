@@ -80,7 +80,6 @@ class PeliculasActivity : AppCompatActivity() {
 
         val nombreL = sharedPreferences.getString("TOKEN",null)
 
-
     }
 
 
@@ -88,11 +87,5 @@ class PeliculasActivity : AppCompatActivity() {
          super.onResume()
 
      }
-
-
-
-
-
-
 
 }
