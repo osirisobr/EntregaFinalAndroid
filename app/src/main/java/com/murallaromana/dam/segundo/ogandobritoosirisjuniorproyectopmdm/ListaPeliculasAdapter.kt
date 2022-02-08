@@ -31,7 +31,7 @@ class ListaPeliculasAdapter(val peliculas : List<Pelicula>?, val context: Contex
     override fun onBindViewHolder(holder: PeliculaHolder, position: Int) {
         val Pelicula = peliculas?.get(position)
 
-        holder.tvTitulo.setText(Pelicula?.titulo)
+        holder.tvTitulo.setText(Pelicula?.titulo+ " "+Pelicula?.año)
         holder.tvDuracion.setText(Pelicula?.duracion)
         holder.tvDirector.setText(Pelicula?.director)
         holder.tvRating.setText(Pelicula?.rating)

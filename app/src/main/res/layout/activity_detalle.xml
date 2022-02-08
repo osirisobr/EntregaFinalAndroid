@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetalleActivity">
@@ -18,23 +22,22 @@
         />
 
     <EditText
-        android:id="@+id/etUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/etNumeroDirector"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="URL imagen"
+        android:hint="DirectorNum"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDirectorDetalle" />
+        app:layout_constraintTop_toBottomOf="@+id/etDirector" />
 
     <EditText
-        android:id="@+id/tvAñoPeliculaDetalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/etTituloDetalle"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:hint="Titulo(Año)"
         android:inputType="textImeMultiLine"
@@ -43,51 +46,98 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
-        android:id="@+id/tvDirectorDetalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/etDirector"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="Director"
-        android:inputType="textImeMultiLine"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGeneroDetalle" />
+        app:layout_constraintTop_toBottomOf="@+id/etAnhoDetalle" />
 
     <EditText
-        android:id="@+id/tvGeneroDetalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/etAnhoDetalle"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="Año"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRatingDetalle" />
+
+    <EditText
+        android:id="@+id/etGeneroDetalle"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="Genero"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRatingDetalle" />
+
+    <EditText
+        android:id="@+id/etUrlDetalle"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:ems="10"
+        android:hint="Url"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNumeroDirector" />
+
+    <EditText
+        android:id="@+id/etTiempoDuracion"
+        android:layout_width="208dp"
+        android:layout_height="48dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Genero"
+        android:hint="Duracion"
         android:inputType="textImeMultiLine"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAñoPeliculaDetalle" />
+        app:layout_constraintTop_toBottomOf="@+id/etTituloDetalle" />
+
+    <EditText
+        android:id="@+id/etRatingDetalle"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Rating"
+        android:inputType="textImeMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTiempoDuracion" />
 
     <ImageButton
         android:id="@+id/ibLlamarDirectorD"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="120dp"
-        app:layout_constraintStart_toEndOf="@+id/tvDirectorDetalle"
+        android:layout_marginTop="92dp"
+        app:layout_constraintStart_toEndOf="@+id/etRatingDetalle"
         app:layout_constraintTop_toBottomOf="@+id/ivCaratulaDetalle"
         app:srcCompat="@drawable/ic_baseline_phone_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/tvSinopsisDetalles"
-        android:layout_width="333dp"
-        android:layout_height="235dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="400dp"
+        android:layout_height="169dp"
+        android:layout_marginStart="4dp"
         android:ems="10"
         android:hint="Sinopsis"
         android:inputType="textMultiLine"
         android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUrl" />
+        app:layout_constraintTop_toBottomOf="@+id/etUrlDetalle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

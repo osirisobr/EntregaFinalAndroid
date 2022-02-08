@@ -11,16 +11,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Id
 import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.RetrofictClient
-import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Token
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.Arrays.toString
-import java.util.Objects.toString
 
 class DetalleActivity : AppCompatActivity() {
 
@@ -33,12 +31,16 @@ class DetalleActivity : AppCompatActivity() {
     }
     lateinit var ibLlamarDirectorD: ImageButton
     lateinit var ivCaratulaDetalle: ImageView
-    lateinit var tvDirectorDetalles: EditText
-    lateinit var tvTituloDetalle: EditText
+    lateinit var etDirector: EditText
+    lateinit var etTituloDetalle: EditText
+    lateinit var etRating: EditText
+    lateinit var etDuracion: EditText
     lateinit var etUrl: EditText
-    lateinit var tvAñoPeliculaDetalle:EditText
-    lateinit var tvSinopsisDetalle:EditText
-    lateinit var tvGeneroDetalle: EditText
+    lateinit var etAñoPeliculaDetalle:EditText
+    lateinit var etSinopsisDetalle:EditText
+    lateinit var etGeneroDetalle: EditText
+    lateinit var etNumeroDirector: EditText
+
     private lateinit var pelicula: Pelicula
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,29 +48,45 @@ class DetalleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detalle)
         ibLlamarDirectorD = findViewById(R.id.ibLlamarDirectorD)
         ivCaratulaDetalle = findViewById(R.id.ivCaratulaDetalle)
-        tvDirectorDetalles = findViewById(R.id.tvDirectorDetalle)
-        tvAñoPeliculaDetalle = findViewById(R.id.tvAñoPeliculaDetalle)
-        tvTituloDetalle = findViewById(R.id.tvAñoPeliculaDetalle)
-        tvSinopsisDetalle = findViewById(R.id.tvSinopsisDetalles)
-        tvGeneroDetalle = findViewById(R.id.tvGeneroDetalle)
-        etUrl = findViewById(R.id.etUrl)
+        etRating = findViewById(R.id.etRatingDetalle)
+        etDirector = findViewById(R.id.etDirector)
+        etAñoPeliculaDetalle = findViewById(R.id.etAnhoDetalle)
+        etTituloDetalle = findViewById(R.id.etTituloDetalle)
+        etSinopsisDetalle = findViewById(R.id.tvSinopsisDetalles)
+        etGeneroDetalle = findViewById(R.id.etGeneroDetalle)
+        etDuracion = findViewById(R.id.etTiempoDuracion)
+        etUrl = findViewById(R.id.etGeneroDetalle)
+        etNumeroDirector = findViewById(R.id.etNumeroDirector)
+
+
+
+
         val context = this
         ibLlamarDirectorD.setOnClickListener(){
 
             val telefono = "tel:"+pelicula.numeroDirector
             startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(telefono)))
         }
-        tvTituloDetalle.isEnabled = false
-        tvGeneroDetalle.isEnabled = false
-        tvSinopsisDetalle.isEnabled = false
-        tvDirectorDetalles.isEnabled = false
+        etTituloDetalle.isEnabled = false
+        etGeneroDetalle.isEnabled = false
+        etSinopsisDetalle.isEnabled = false
+        etDirector.isEnabled = false
         etUrl.isEnabled = false
+        etRating.isEnabled = false
+        etAñoPeliculaDetalle.isEnabled = false
+        etDuracion.isEnabled = false
+        etNumeroDirector.isEnabled = false
 
-        tvTituloDetalle.setTextColor(Color.BLACK);
-        tvGeneroDetalle.setTextColor(Color.BLACK);
-        tvSinopsisDetalle.setTextColor(Color.BLACK);
-        tvDirectorDetalles.setTextColor(Color.BLACK);
-        etUrl.setTextColor(Color.BLACK);
+
+        etTituloDetalle.setTextColor(Color.BLACK)
+        etGeneroDetalle.setTextColor(Color.BLACK)
+        etAñoPeliculaDetalle.setTextColor(Color.BLACK)
+        etRating.setTextColor(Color.BLACK)
+        etDuracion.setTextColor(Color.BLACK)
+        etNumeroDirector.setTextColor(Color.BLACK)
+        etSinopsisDetalle.setTextColor(Color.BLACK)
+        etDirector.setTextColor(Color.BLACK)
+        etUrl.setTextColor(Color.BLACK)
     }
     override fun onResume() {
         super.onResume()
@@ -76,19 +94,27 @@ class DetalleActivity : AppCompatActivity() {
         if (intent.extras?.get("pelicula") != null) {
             pelicula = intent.extras?.get("pelicula") as Pelicula
             title = pelicula.titulo
-            tvGeneroDetalle.setText(pelicula.genero)
-            tvDirectorDetalles.setText(pelicula.director)
-            tvTituloDetalle.setText(pelicula.titulo)
-            tvSinopsisDetalle.setText(pelicula.sinopsis)
+            etGeneroDetalle.setText(pelicula.genero)
+            etDirector.setText(pelicula.director)
+            etTituloDetalle.setText(pelicula.titulo)
+            etSinopsisDetalle.setText(pelicula.sinopsis)
+            etRating.setText(pelicula.rating)
+            etAñoPeliculaDetalle.setText(pelicula.año)
+            etDuracion.setText(pelicula.duracion)
             etUrl.setText(pelicula.url)
+
             Picasso.get().load(pelicula.url).into(ivCaratulaDetalle)
         } else {
             title = "nueva pelicula"
-            tvTituloDetalle.isEnabled = true
-            tvGeneroDetalle.isEnabled = true
-            tvSinopsisDetalle.isEnabled = true
-            tvDirectorDetalles.isEnabled = true
+            etTituloDetalle.isEnabled = true
+            etGeneroDetalle.isEnabled = true
+            etSinopsisDetalle.isEnabled = true
+            etDirector.isEnabled = true
             etUrl.isEnabled = true
+            etAñoPeliculaDetalle.isEnabled = true
+            etRating.isEnabled = true
+            etDuracion.isEnabled = true
+            etNumeroDirector.isEnabled = true
         }
 
 }
@@ -122,15 +148,73 @@ class DetalleActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_editar -> {
 
-                tvTituloDetalle.isEnabled = true
-                tvGeneroDetalle.isEnabled = true
-                tvSinopsisDetalle.isEnabled = true
-                tvDirectorDetalles.isEnabled = true
+
+                etTituloDetalle.isEnabled = true
+                etGeneroDetalle.isEnabled = true
+                etSinopsisDetalle.isEnabled = true
+                etDirector.isEnabled = true
+                etUrl.isEnabled = true
+                etAñoPeliculaDetalle.isEnabled = true
+                etRating.isEnabled = true
+                etDuracion.isEnabled = true
+                etNumeroDirector.isEnabled = true
+
 
                 Toast.makeText(this, "Editar", Toast.LENGTH_SHORT).show()
                 itemGuardar?.isVisible = true
                 itemEditar?.isVisible = false
                 itemBorrar?.isVisible = false
+
+               //Editar id (En Proceso)-----------------------------------------------------------
+/*
+
+                val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+
+                val Token ="Bearer " + sharedPreferences.getString("TOKEN",null)
+
+
+                val retrofit = Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl("https://damapi.herokuapp.com/api/v1/")
+                    .build()
+                  val llamadaApi: Call<Id> = RetrofictClient.apiRetrofit.getId(Token.toString())
+
+
+                llamadaApi.enqueue(object: Callback<Id> {
+
+                    override fun onFailure(call: Call<Id>, t: Throwable) {
+                        showAlert("no va esto eh")
+                    }
+
+                    override fun onResponse(call: Call<Id>, response: Response<Id>) {
+                        val Id: String? = response.body()?.id
+                        showAlert(Id!!)
+                    }
+                })
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 return true
@@ -154,25 +238,19 @@ class DetalleActivity : AppCompatActivity() {
             }
 
             R.id.action_guardar -> {
-                if (tvSinopsisDetalle.text.toString().isEmpty() || tvDirectorDetalles.text.toString()
-                        .isEmpty() || tvDirectorDetalles.text.toString().isEmpty()
-                    || tvTituloDetalle.text.toString()
-                        .isEmpty() || tvGeneroDetalle.text.toString().isEmpty()
-
+                if (etTituloDetalle.text.toString().isEmpty() || etDuracion.text.toString()
+                        .isEmpty() || etRating.text.toString().isEmpty()
                 ) {
 
 
-                    if (tvTituloDetalle.text.toString().isEmpty()) {
-                        tvTituloDetalle.error = "El campo titulo no puede estar vacio"
+                    if (etTituloDetalle.text.toString().isEmpty()) {
+                        etTituloDetalle.error = "El campo titulo no puede estar vacio"
                     }
-                    if (tvSinopsisDetalle.text.toString().isEmpty()) {
-                        tvSinopsisDetalle.error = "El campo nota no puede estar vacio"
+                    if (etDuracion.text.toString().isEmpty()) {
+                        etDuracion.error = "El campo duracion no puede estar vacio"
                     }
-                    if (tvDirectorDetalles.text.toString().isEmpty()) {
-                        tvDirectorDetalles.error = "El campo Director no puede estar vacio"
-                    }
-                    if (tvGeneroDetalle.text.toString().isEmpty()) {
-                        tvGeneroDetalle.error = "El campo Genero no puede estar vacio"
+                    if (etRating.text.toString().isEmpty()) {
+                        etRating.error = "El campo rating no puede estar vacio"
                     }
 
                 } else {
@@ -189,7 +267,8 @@ class DetalleActivity : AppCompatActivity() {
                     val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.create(
                         //Terminar de rellenar con los editTexts
 
-                        Pelicula(tvTituloDetalle.text.toString(),"8","Accion","Sakamoto","2000","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/e9UQGoX2ZFNdrjLwEejMSMDSxmR.jpg","100 participantes, uno sobrevive","456","9375638273")
+                        Pelicula(etTituloDetalle.text.toString(),etRating.text.toString(),etGeneroDetalle.text.toString(),etDirector.text.toString(),etAñoPeliculaDetalle.text.toString(),etUrl.text.toString(),
+                            etSinopsisDetalle.text.toString(),etDuracion.text.toString(),etNumeroDirector.text.toString(),"")
                         ,Token.toString())
 
 
@@ -216,26 +295,15 @@ class DetalleActivity : AppCompatActivity() {
                         }
                     })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    etTituloDetalle.isEnabled = true
+                    etGeneroDetalle.isEnabled = true
+                    etSinopsisDetalle.isEnabled = true
+                    etDirector.isEnabled = true
+                    etUrl.isEnabled = true
+                    etAñoPeliculaDetalle.isEnabled = true
+                    etRating.isEnabled = true
+                    etDuracion.isEnabled = true
+                    etNumeroDirector.isEnabled = true
 
 
 

@@ -41,6 +41,19 @@ class LoginActivity : AppCompatActivity() {
         etContraseñaL = findViewById(R.id.etContraseñaL)
         btAcceder = findViewById(R.id.btAcceder)
         val context = this
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+
+
+
+
+        if ( sharedPreferences.getString("TOKEN",null).isNullOrEmpty()){
+
+
+
+
+        }
+
+
 
 
 
