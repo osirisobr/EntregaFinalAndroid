@@ -46,73 +46,67 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        if ( sharedPreferences.getString("TOKEN",null).isNullOrEmpty()){
+        if ( sharedPreferences.getString("TOKEN",null).isNullOrEmpty() ){
+
+
+            etNombreL.setText("hola@gmail.com")
+            etContraseñaL.setText("1234")
+            btAcceder.animate().alphaBy(5.02f)
 
 
 
+            btAcceder.setOnClickListener(){
 
-        }
+                var usuario = etNombreL.text.toString()
+                var contraseña = etContraseñaL.text.toString()
 
+                val u = Usuario(usuario,contraseña)
+                val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
 
-
-
-
-        etNombreL.setText("hola@gmail.com")
-        etContraseñaL.setText("1234")
-        btAcceder.animate().alphaBy(5.02f)
-
-
-
-        btAcceder.setOnClickListener(){
-
-            var usuario = etNombreL.text.toString()
-            var contraseña = etContraseñaL.text.toString()
-
-            val u = Usuario(usuario,contraseña)
-            val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
-
-            llamadaApi.enqueue(object: Callback<Token> {
-                override fun onFailure(call: Call<Token>, t: Throwable) {
+                llamadaApi.enqueue(object: Callback<Token> {
+                    override fun onFailure(call: Call<Token>, t: Throwable) {
                         Log.d("respuesta: onFailure", t.toString())
 
-                }
-
-                override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                        Log.d("respuesta: onResponse", response.toString())
-
-                    if (response.code() > 299 || response.code() < 200) {
-                        // Muestro alerta: no se ha podido crear el usuario
-                        Toast.makeText(context,"no se ha podido acceder", Toast.LENGTH_SHORT).show()
-
-                    } else {
-
-                        val token: String? = response.body()?.token
-                        Log.d("respuesta: token:", token.orEmpty())
-                        val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-                        val editor = sharedPreferences.edit()
-                        editor.apply(){
-                            putString("TOKEN",token)
-                        }.apply()
-                        val intent = Intent(context, PeliculasActivity::class.java)
-                        startActivity(intent)
-
-                        // TODO: Muestro mensaje de usuario creado correctamente.
-
-                        // TODO: Guardo en sharedPreferences el token
-
-                        // TODO: Inicio nueva activity
+                        // TODO: alertdialog de "NO se ha podido acceder a la pagina"
                     }
 
-                }
-            })
-            //hio
+                    override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                        Log.d("respuesta: onResponse", response.toString())
 
-        }
+                        if (response.code() > 299 || response.code() < 200) {
+                            // Muestro alerta: no se ha podido crear el usuario
+                            Toast.makeText(context,"no se ha podido acceder", Toast.LENGTH_SHORT).show()
 
-        btRegistrarse.setOnClickListener() {
-            val intent = Intent(this, RegistroActivity::class.java)
-            startActivity(intent)
-        }
+                        } else {
+
+                            val token: String? = response.body()?.token
+                            Log.d("respuesta: token:", token.orEmpty())
+                            val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.apply(){
+                                putString("TOKEN",token)
+                            }.apply()
+
+                            val intent = Intent(context, PeliculasActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                    }
+                })
+                //hio
+
+            }
+
+            btRegistrarse.setOnClickListener() {
+                val intent = Intent(this, RegistroActivity::class.java)
+                startActivity(intent)
+            }
+
+
+
+
+        }else{    val intent = Intent(context, PeliculasActivity::class.java)
+            startActivity(intent)}
 
 
 

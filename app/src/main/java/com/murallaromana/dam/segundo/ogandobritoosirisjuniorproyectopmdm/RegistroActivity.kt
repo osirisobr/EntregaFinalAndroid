@@ -65,11 +65,11 @@ class RegistroActivity : AppCompatActivity() {
                     Log.d("respuesta: onResponse", response.toString())
 
                     if (response.code() > 299 || response.code() < 200) {
-                        showAlert("Usuario ")
+                      //  showAlert("Usuario ")
 
                     } else {
 
-                       showAlert("Usuario creado correctamente")
+                     //  showAlert("Usuario creado correctamente")
 
 
                     }

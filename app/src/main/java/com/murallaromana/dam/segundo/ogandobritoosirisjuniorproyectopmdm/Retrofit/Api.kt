@@ -7,16 +7,16 @@ import retrofit2.http.*
 interface Api {
    var pelicula: Pelicula
 
-
+ //@Path("")path: String,
 
     @GET("movies")
     fun getPeliculas(@Header("Authorization")token: String): Call<List<Pelicula>>
-    @GET("movies")
-    fun getId(@Header("Authorization")token: String): Call<List<Pelicula>>
+    @GET("movies/{id}")
+    fun getId(@Header("Authorization")token: String, @Path("id")id:String?): Call<Pelicula>
 
     //En proceso
     @PUT("movies/")
-    fun update(@Header("Authorization")token: String,@Path("")path: String ): Call<Pelicula>
+    fun update(@Body pelicula: Pelicula, @Header("Authorization")token: String): Call<Unit>
 
 
 

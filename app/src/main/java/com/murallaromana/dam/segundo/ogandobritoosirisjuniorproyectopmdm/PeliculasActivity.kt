@@ -44,6 +44,7 @@ class PeliculasActivity : AppCompatActivity() {
         val Token ="Bearer " + sharedPreferences.getString("TOKEN",null)
         Toast.makeText(context,Token, Toast.LENGTH_LONG).show()
 
+
         val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas(Token.toString())
         llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
             override fun onResponse(
@@ -52,7 +53,16 @@ class PeliculasActivity : AppCompatActivity() {
 
             ) {
                 if (response.isSuccessful){
-                    Toast.makeText(context,"", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,"Todo correcto", Toast.LENGTH_LONG).show()
+                }else{
+                    val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.apply(){
+                        putString("TOKEN","")
+                    }.apply()
+                    val intent = Intent(context, LoginActivity::class.java)
+                    startActivity(intent)
+
                 }
                 var listaPeliculas: List<Pelicula>? = response.body()
 
