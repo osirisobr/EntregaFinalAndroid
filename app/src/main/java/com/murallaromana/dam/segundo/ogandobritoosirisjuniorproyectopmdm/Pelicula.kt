@@ -19,7 +19,7 @@ data class Pelicula(
 
 ): Serializable {
 
-
+//
 
     fun getGeneroPelicula(): String {
         return genero

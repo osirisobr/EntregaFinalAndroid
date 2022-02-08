@@ -2,7 +2,7 @@ package com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrof
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+//
 object RetrofictClient {
     private fun getRetrofit(): Retrofit {
         val retrofit = Retrofit.Builder().baseUrl(" https://damapi.herokuapp.com/api/v1/")

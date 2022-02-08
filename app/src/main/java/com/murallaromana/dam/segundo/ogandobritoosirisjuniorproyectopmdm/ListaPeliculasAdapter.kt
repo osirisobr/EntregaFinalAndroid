@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
 class ListaPeliculasAdapter(val peliculas : List<Pelicula>?, val context: Context) : RecyclerView.Adapter<ListaPeliculasAdapter.PeliculaHolder>() {
-
+    //
 
     class PeliculaHolder  (view: View) : RecyclerView.ViewHolder(view){
         val tvTitulo = view.findViewById<TextView>(R.id.tvTituloAño)

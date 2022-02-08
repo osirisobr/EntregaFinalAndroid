@@ -58,7 +58,7 @@ class RegistroActivity : AppCompatActivity() {
             llamadaApi.enqueue(object: Callback<Unit> {
                 override fun onFailure(call: Call<Unit>, t: Throwable) {
                     Log.d("respuesta: onFailure", t.toString())
-
+//
                 }
 
                 override fun onResponse(call: Call<Unit>, response: Response<Unit>) {

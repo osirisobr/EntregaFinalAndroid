@@ -77,7 +77,7 @@ class PeliculasActivity : AppCompatActivity() {
                 Log.d("Prueba",t.message.toString())
             }
         } )
-
+//
     }
     fun loadData() {
 

@@ -8,7 +8,7 @@ interface Api {
    var pelicula: Pelicula
 
  //@Path("")path: String,
-
+ //
     @GET("movies")
     fun getPeliculas(@Header("Authorization")token: String): Call<List<Pelicula>>
     @GET("movies/{id}")

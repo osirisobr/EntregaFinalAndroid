@@ -234,7 +234,7 @@ class DetalleActivity : AppCompatActivity() {
                 if (etTituloDetalle.text.toString().isEmpty() || etDuracion.text.toString()
                         .isEmpty() || etRating.text.toString().isEmpty()
                 ) {
-
+//
 
                     if (etTituloDetalle.text.toString().isEmpty()) {
                         etTituloDetalle.error = "El campo titulo no puede estar vacio"

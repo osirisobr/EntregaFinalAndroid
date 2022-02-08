@@ -103,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
 
-
+//
 
         }else{    val intent = Intent(context, PeliculasActivity::class.java)
             startActivity(intent)}
