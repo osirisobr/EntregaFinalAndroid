@@ -250,7 +250,7 @@ class DetalleActivity : AppCompatActivity() {
                 } else {
 
 
-                            //Todo en proceso
+                            //Todo en procesoo
 
                   val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
                     val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
