@@ -166,38 +166,6 @@ class DetalleActivity : AppCompatActivity() {
                 itemGuardar?.isVisible = true
                 itemEditar?.isVisible = false
                 itemBorrar?.isVisible = false
-
-                //Editar id (En Proceso)-----------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 return true
             }
             R.id.action_borrar -> {
@@ -207,6 +175,48 @@ class DetalleActivity : AppCompatActivity() {
                     .setMessage("la pelicula " + pelicula.titulo + "sera eliminada. ¿Estas seguro?.")
                     .setPositiveButton("Aceptar") { _, _ ->
                         App.peliculas.remove(pelicula)
+
+
+                        //Configuracion retrofit
+
+                        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+                        val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
+                        val llamadaApi: Call<Pelicula> = RetrofictClient.apiRetrofit.getId(Token,pelicula.id)
+                        llamadaApi.enqueue(object : Callback<Pelicula>{
+                            override fun onResponse(
+                                call: Call<Pelicula>,
+                                response: Response<Pelicula>
+                            ) {
+                                var id = response.body()?.id
+
+                                val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+                                val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
+                                val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.borrar(Token,id)
+                                llamadaApi.enqueue(object : Callback<Unit>{
+                                    override fun onResponse(
+                                        call: Call<Unit>,
+                                        response: Response<Unit>
+                                    ) {
+
+
+
+                                    }
+                                    override fun onFailure(call: Call<Unit>, t: Throwable) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                            }
+                            override fun onFailure(call: Call<Pelicula>, t: Throwable) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+
+
+                         //Separacion
+
+
+
+
                         Toast.makeText(this, "Película Borrada", Toast.LENGTH_SHORT).show()
                         finish()
                     }
@@ -215,20 +225,9 @@ class DetalleActivity : AppCompatActivity() {
 
                 return true
 
-
             }
 
             R.id.action_guardar -> {
-
-
-
-
-
-
-
-
-
-
 
 
                 if (etTituloDetalle.text.toString().isEmpty() || etDuracion.text.toString()

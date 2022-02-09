@@ -45,7 +45,7 @@ class PeliculasActivity : AppCompatActivity() {
         Toast.makeText(context,Token, Toast.LENGTH_LONG).show()
 
 
-        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas(Token.toString())
+        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas(Token)
         llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
             override fun onResponse(
                 call: Call<List<Pelicula>>,
@@ -58,7 +58,7 @@ class PeliculasActivity : AppCompatActivity() {
                     val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     editor.apply(){
-                        putString("TOKEN","")
+                        putString("TOKEN",null)
                     }.apply()
                     val intent = Intent(context, LoginActivity::class.java)
                     startActivity(intent)
@@ -75,6 +75,7 @@ class PeliculasActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
                 Log.d("Prueba",t.message.toString())
+
             }
         } )
 //
