@@ -62,6 +62,7 @@ class PeliculasActivity : AppCompatActivity() {
                     }.apply()
                     val intent = Intent(context, LoginActivity::class.java)
                     startActivity(intent)
+                 finish()
 
                 }
                 var listaPeliculas: List<Pelicula>? = response.body()

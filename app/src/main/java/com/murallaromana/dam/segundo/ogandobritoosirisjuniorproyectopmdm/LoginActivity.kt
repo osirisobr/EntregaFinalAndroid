@@ -41,88 +41,141 @@ class LoginActivity : AppCompatActivity() {
         etContraseñaL = findViewById(R.id.etContraseñaL)
         btAcceder = findViewById(R.id.btAcceder)
         val context = this
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+
+
+        val correo: String? = sharedPreferences.getString("correo", null)
 
 
 
 
-        if ( sharedPreferences.getString("TOKEN",null).isNullOrEmpty() ){
-
-
+        if (correo != null) {
+            etNombreL.setText(correo)
+        } else {
             etNombreL.setText("hola@gmail.com")
-            etContraseñaL.setText("1234")
-            btAcceder.animate().alphaBy(5.02f)
+
+        }
+       // etContraseñaL.setText("1234")
+
+
+        directLoad()
+
+
+        var usuario = etNombreL.text.toString()
+        var contraseña = etContraseñaL.text.toString()
+
+
+        btAcceder.setOnClickListener() {
+
+
+            acceder()
+
+
+        }
 
 
 
-            btAcceder.setOnClickListener(){
-
-                var usuario = etNombreL.text.toString()
-                var contraseña = etContraseñaL.text.toString()
-
-                val u = Usuario(usuario,contraseña)
-                val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
-
-                llamadaApi.enqueue(object: Callback<Token> {
-                    override fun onFailure(call: Call<Token>, t: Throwable) {
-                        Log.d("respuesta: onFailure", t.toString())
-
-                        // TODO: alertdialog de "NO se ha podido acceder a la pagina"
-                    }
-
-                    override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                        Log.d("respuesta: onResponse", response.toString())
-
-                        if (response.code() > 299 || response.code() < 200) {
-                            // Muestro alerta: no se ha podido crear el usuario
-                            Toast.makeText(context,"no se ha podido acceder", Toast.LENGTH_SHORT).show()
-
-                        } else {
-
-                            val token: String? = response.body()?.token
-                            Log.d("respuesta: token:", token.orEmpty())
-                            val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-                            val editor = sharedPreferences.edit()
-                            editor.apply(){
-                                putString("TOKEN",token)
-                            }.apply()
-
-                            val intent = Intent(context, PeliculasActivity::class.java)
-                            startActivity(intent)
-                        }
-
-                    }
-                })
-                //hio
-
-            }
-
-            btRegistrarse.setOnClickListener() {
-                val intent = Intent(this, RegistroActivity::class.java)
-                startActivity(intent)
-            }
 
 
-//
 
-        }else{
 
-            val intent = Intent(context, PeliculasActivity::class.java)
-            startActivity(intent)}
 
+
+        btRegistrarse.setOnClickListener() {
+            val intent = Intent(this, RegistroActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
 
 
     }
 
 
-    fun loadToken(){
+    fun directLoad() {
+        val context = this
+        var usuario = etNombreL.text.toString()
+        var contraseña = etContraseñaL.text.toString()
+        val u = Usuario(usuario, contraseña)
+        val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
 
+        llamadaApi.enqueue(object : Callback<Token> {
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+                Log.d("respuesta: onFailure", t.toString())
 
+                // TODO: alertdialog de "NO se ha podido acceder a la pagina"
+            }
+
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                Log.d("respuesta: onResponse", response.toString())
+
+                if (response.code() > 299 || response.code() < 200) {
+
+                    // Muestro alerta: no se ha podido crear el usuario
+                    Toast.makeText(context, "no se ha podido acceder", Toast.LENGTH_SHORT).show()
+
+                } else {
+
+                    val token: String? = response.body()?.token
+                    Log.d("respuesta: token:", token.orEmpty())
+                    val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.apply() {
+                        putString("TOKEN", token)
+                    }.apply()
+
+                    val intent = Intent(context, PeliculasActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+            }
+        })
 
     }
 
+    fun acceder() {
+
+        val context = this
+        var usuario = etNombreL.text.toString()
+        var contraseña = etContraseñaL.text.toString()
+        val u = Usuario(usuario, contraseña)
+        val llamadaApi: Call<Token> = RetrofictClient.apiRetrofit.login(u)
+
+        llamadaApi.enqueue(object : Callback<Token> {
+            override fun onFailure(call: Call<Token>, t: Throwable) {
+                Log.d("respuesta: onFailure", t.toString())
+
+                // TODO: alertdialog de "NO se ha podido acceder a la pagina"
+            }
+
+            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                Log.d("respuesta: onResponse", response.toString())
+
+                if (response.code() > 299 || response.code() < 200) {
+                    // Muestro alerta: no se ha podido crear el usuario
+                    Toast.makeText(context, "no se ha podido acceder", Toast.LENGTH_SHORT).show()
+
+                } else {
+
+                    val token: String? = response.body()?.token
+                    Log.d("respuesta: token:", token.orEmpty())
+                    val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.apply() {
+                        putString("TOKEN", token)
+                    }.apply()
+
+                    val intent = Intent(context, PeliculasActivity::class.java)
+                    startActivity(intent)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                }
+
+            }
+        })
 
 
+    }
 
 
     /*fun loadData() {

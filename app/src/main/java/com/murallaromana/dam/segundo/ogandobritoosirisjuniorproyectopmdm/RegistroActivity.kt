@@ -40,18 +40,14 @@ class RegistroActivity : AppCompatActivity() {
         etContraseñaR.setText("1234")
 
         btHacerEfectivoRegistro.setOnClickListener(){
-            saveData()
-            onBackPressed()
+           // saveData()
+           onBackPressed()
 
 
             var usuario = etEmail.text.toString()
             var contraseña = etContraseñaR.text.toString()
 
             val u = Usuario(usuario,contraseña)
-            val retrofit = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://damapi.herokuapp.com/api/v1/")
-                .build()
             val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.signup(u)
 
 
@@ -65,11 +61,20 @@ class RegistroActivity : AppCompatActivity() {
                     Log.d("respuesta: onResponse", response.toString())
 
                     if (response.code() > 299 || response.code() < 200) {
-                      //  showAlert("Usuario ")
+                        showAlert("Error al crear el usuario")
 
                     } else {
 
-                     //  showAlert("Usuario creado correctamente")
+
+                        Toast.makeText(context,"Usuario creado correctamente", Toast.LENGTH_LONG).show()
+                        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.apply(){
+                            putString("correo",usuario)
+                        }.apply()
+                        val intent = Intent(context, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
 
 
                     }
