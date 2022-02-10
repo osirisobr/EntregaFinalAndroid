@@ -43,9 +43,22 @@ class LoginActivity : AppCompatActivity() {
         val context = this
         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
 
-
         val correo: String? = sharedPreferences.getString("correo", null)
+        val Tkn: String? = sharedPreferences.getString("TOKEN", null)
 
+
+        if (Tkn == null){
+            btAcceder.setOnClickListener() {
+                acceder()
+            }
+
+        }else{
+
+            val intent = Intent(context, PeliculasActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
 
 
 
@@ -58,20 +71,14 @@ class LoginActivity : AppCompatActivity() {
        // etContraseñaL.setText("1234")
 
 
-        directLoad()
+        //directLoad()
 
 
         var usuario = etNombreL.text.toString()
         var contraseña = etContraseñaL.text.toString()
 
 
-        btAcceder.setOnClickListener() {
 
-
-            acceder()
-
-
-        }
 
 
 

@@ -93,7 +93,7 @@ class PeliculasActivity : AppCompatActivity() {
 //
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_detalle_pelicula, menu)
+        menuInflater.inflate(R.menu.menu_peliculas, menu)
         if (menu != null) {
             PeliculasActivity.itemCerrarSesion = menu.findItem(R.id.action_cerrarsesion)
         }
@@ -104,10 +104,10 @@ class PeliculasActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
-            R.id.action_borrar -> {
+            R.id.action_cerrarsesion -> {
                 val context=this
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                val dialog = builder.setTitle("Eliminar pelicula")
+                val dialog = builder.setTitle("Cerrar Sesion")
                     .setMessage("Se cerrara la sesion. ¿Estas seguro?.")
                     .setPositiveButton("Aceptar") { _, _ ->
                         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
