@@ -218,7 +218,7 @@ class DetalleActivity : AppCompatActivity() {
             R.id.action_guardar -> {
 
                 if (etTituloDetalle.text.toString().isEmpty() || etDuracion.text.toString()
-                        .isEmpty() || etRating.text.toString().isEmpty()
+                        .isEmpty() || etRating.text.toString().isEmpty() || etGeneroDetalle.text.toString().isEmpty() || etDirector.text.toString().isEmpty() || etAñoPeliculaDetalle.text.toString().isEmpty() || etUrl.text.toString().isEmpty() || etNumeroDirector.text.toString().isEmpty() || etSinopsisDetalle.text.toString().isEmpty()
                 ) {
                     if (etTituloDetalle.text.toString().isEmpty()) {
                         etTituloDetalle.error = "El campo titulo no puede estar vacio"
@@ -229,93 +229,139 @@ class DetalleActivity : AppCompatActivity() {
                     if (etRating.text.toString().isEmpty()) {
                         etRating.error = "El campo rating no puede estar vacio"
                     }
+                    if (etGeneroDetalle.text.toString().isEmpty()) {
+                        etGeneroDetalle.error = "El campo Genero no puede estar vacio"
+                    }
+                    if (etDirector.text.toString().isEmpty()) {
+                        etDirector.error = "El campo Director no puede estar vacio"
+                    }
+                    if (etSinopsisDetalle.text.toString().isEmpty()) {
+                        etSinopsisDetalle.error = "El campo Sinopsis no puede estar vacio"
+                    }
+                    if (etUrl.text.toString().isEmpty()) {
+                        etUrl.error = "El campo Url no puede estar vacio"
+                    }
+                    if (etAñoPeliculaDetalle.text.toString().isEmpty()) {
+                        etAñoPeliculaDetalle.error = "El campo Numero no puede estar vacio"
+                    }
+                    if (etNumeroDirector.text.toString().isEmpty()) {
+                        etNumeroDirector.error = "El campo Sinopsis no puede estar vacio"
+                    }
+
 
                 } else {
 
 
                             //Todo en procesoo
 
-                  val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-                    val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
-                    val llamadaApi: Call<Pelicula> = RetrofictClient.apiRetrofit.getId(Token,pelicula?.id)
-                    llamadaApi.enqueue(object : Callback<Pelicula>{
-                        override fun onResponse(
-                            call: Call<Pelicula>,
-                            response: Response<Pelicula>
-                        ) {
-                            var id = response.body()?.id
-                            if ( id != null ){
 
-                                val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
-                                val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.update(  Pelicula(
-                                    etTituloDetalle.text.toString(),
-                                    etRating.text.toString(),
-                                    etGeneroDetalle.text.toString(),
-                                    etDirector.text.toString(),
-                                    etAñoPeliculaDetalle.text.toString(),
-                                    etUrl.text.toString(),
-                                    etSinopsisDetalle.text.toString(),
-                                    etDuracion.text.toString(),
-                                    etNumeroDirector.text.toString(),
-                                    pelicula?.id
-                                ), Token   )
-                                llamadaApi.enqueue(object : Callback<Unit>{
-                                    override fun onResponse(
-                                        call: Call<Unit>,
-                                        response: Response<Unit>
-                                    ) {
-                                        showAlert("pelicula actualizada")
-                                        finish()
-                                    }
+                                if (intent.extras?.get("id") != null){
 
-                                    override fun onFailure(call: Call<Unit>, t: Throwable) {
-                                       showAlert("Algo mal va mal en actualizar")
-                                    }
-                                })
+                                    val sharedPreferences =  getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+                                    val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
+                                    val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.update(  Pelicula(
+                                        etTituloDetalle?.text.toString(),
+                                        etRating?.text.toString(),
+                                        etGeneroDetalle?.text.toString(),
+                                        etDirector?.text.toString(),
+                                        etAñoPeliculaDetalle?.text.toString(),
+                                        etUrl?.text.toString(),
+                                        etSinopsisDetalle?.text.toString(),
+                                        etDuracion?.text.toString(),
+                                        etNumeroDirector?.text.toString(),
+                                        pelicula!!.id
+                                    ), Token   )
+                                    llamadaApi.enqueue(object : Callback<Unit>{
+                                        override fun onResponse(
+                                            call: Call<Unit>,
+                                            response: Response<Unit>
+                                        ) {
+                                            showAlert("pelicula actualizada")
+                                            showAlert(response.code().toString())
 
-
-                            }   else {
-                                val sharedPreferences =
-                                    getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-                                val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
-                                val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.create(
-
-                                    //Terminar de rellenar con los editTexts
-
-                                    Pelicula(
-                                        etTituloDetalle.text.toString(),
-                                        etRating.text.toString(),
-                                        etGeneroDetalle.text.toString(),
-                                        etDirector.text.toString(),
-                                        etAñoPeliculaDetalle.text.toString(),
-                                        etUrl.text.toString(),
-                                        etSinopsisDetalle.text.toString(),
-                                        etDuracion.text.toString(),
-                                        etNumeroDirector.text.toString(),
-                                        null
-                                    ), Token
-                                )
-                                llamadaApi.enqueue(object : Callback<Unit> {
-                                    override fun onFailure(call: Call<Unit>, t: Throwable) {
-                                        Log.d("respuesta: onFailure", t.toString())
-                                        showAlert("Pelicula no añadia")
-                                    }
-                                    override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                                        Log.d("respuesta: onResponse", response.toString())
-
-                                        if (response.code() > 299 || response.code() < 200) {
-                                            showAlert("Error " + response.code().toString())
-                                        } else {
-                                            showAlert("Pelicula creada")
+                                            finish()
                                         }
-                                    }
-                                })
-                            }
-                        }
-                        override fun onFailure(call: Call<Pelicula>, t: Throwable) {
-                           showAlert("Error en añadir")
-                        }
-                    })
+
+                                        override fun onFailure(call: Call<Unit>, t: Throwable) {
+                                            showAlert("Algo mal va mal en actualizar")
+                                        }
+                                    })
+
+
+
+
+
+
+                                }else{
+
+
+                                    val sharedPreferences =
+                                        getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+                                    val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
+                                    val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.create(
+
+                                        //Terminar de rellenar con los editTexts
+
+                                        Pelicula(
+                                            etTituloDetalle?.text.toString(),
+                                            etRating?.text.toString(),
+                                            etGeneroDetalle?.text.toString(),
+                                            etDirector?.text.toString(),
+                                            etAñoPeliculaDetalle?.text.toString(),
+                                            etUrl?.text.toString(),
+                                            etSinopsisDetalle?.text.toString(),
+                                            etDuracion?.text.toString(),
+                                            etNumeroDirector?.text.toString(),pelicula?.id
+
+                                        ), Token
+                                    )
+                                    llamadaApi.enqueue(object : Callback<Unit> {
+                                        override fun onFailure(call: Call<Unit>, t: Throwable) {
+                                            Log.d("respuesta: onFailure", t.toString())
+                                            showAlert("Pelicula no añadia")
+                                        }
+                                        override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                                            Log.d("respuesta: onResponse", response.toString())
+
+                                            if (response.code() > 299 || response.code() < 200) {
+                                                showAlert("Error " + response.code().toString())
+                                            } else {
+                                                showAlert("Pelicula creada")
+                                                onBackPressed()
+                                                finish()
+                                            }
+                                        }
+                                    })
+
+
+
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     etTituloDetalle.isEnabled = true
                     etGeneroDetalle.isEnabled = true
                     etSinopsisDetalle.isEnabled = true
@@ -335,9 +381,40 @@ class DetalleActivity : AppCompatActivity() {
     }
     private fun showAlert(message: String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("ERROR")
+        builder.setTitle("Aviso")
         builder.setMessage(message)
         val dialog = builder.create()
         dialog.show()
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
