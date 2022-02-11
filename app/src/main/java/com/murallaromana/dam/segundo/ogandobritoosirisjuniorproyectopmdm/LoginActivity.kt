@@ -50,18 +50,15 @@ class LoginActivity : AppCompatActivity() {
         if (Tkn == null){
             btAcceder.setOnClickListener() {
                 acceder()
+
+
+
             }
-
         }else{
-
             val intent = Intent(context, PeliculasActivity::class.java)
             startActivity(intent)
             finish()
-
         }
-
-
-
         if (correo != null) {
             etNombreL.setText(correo)
         } else {
@@ -93,6 +90,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
 
+            btRegistrarse.isEnabled = false
         }
 
 
@@ -130,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
                     editor.apply() {
                         putString("TOKEN", token)
                     }.apply()
-
+                    btAcceder.isEnabled = false
                     val intent = Intent(context, PeliculasActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -175,7 +173,7 @@ class LoginActivity : AppCompatActivity() {
 
                     val intent = Intent(context, PeliculasActivity::class.java)
                     startActivity(intent)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    finish()
                 }
 
             }

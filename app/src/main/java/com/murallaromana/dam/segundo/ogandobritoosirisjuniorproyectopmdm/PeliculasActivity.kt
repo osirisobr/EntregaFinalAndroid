@@ -41,65 +41,18 @@ class PeliculasActivity : AppCompatActivity() {
 
 
 
-
-
-        val context = this
-
-
         faButton.setOnClickListener() {
             val intent = Intent(this, DetalleActivity::class.java)
             startActivity(intent) }
-
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-
-        val Token ="Bearer " + sharedPreferences.getString("TOKEN",null)
-        Toast.makeText(context,Token, Toast.LENGTH_LONG).show()
-
-
-        val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas(Token)
-        llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
-            override fun onResponse(
-                call: Call<List<Pelicula>>,
-                response: Response<List<Pelicula>>
-
-            ) {
-                if (response.isSuccessful){
-                    Toast.makeText(context,"Todo correcto", Toast.LENGTH_LONG).show()
-                }else{
-                    val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.apply(){
-                        putString("TOKEN",null)
-                    }.apply()
-                    val intent = Intent(context, LoginActivity::class.java)
-                    startActivity(intent)
-                 finish()
-
-                }
-                var listaPeliculas: List<Pelicula>? = response.body()
-
-                var adapter = ListaPeliculasAdapter(listaPeliculas,context)
-                rvPeliculas.adapter = adapter
-
-             //   Toast.makeText(context, listaPeliculas, Toast.LENGTH_SHORT).show()
-
-            }
-
-            override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
-                Log.d("Prueba",t.message.toString())
-
-            }
-        } )
-//
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_peliculas, menu)
         if (menu != null) {
-            PeliculasActivity.itemCerrarSesion = menu.findItem(R.id.action_cerrarsesion)
+           itemCerrarSesion = menu.findItem(R.id.action_cerrarsesion)
         }
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -116,15 +69,8 @@ class PeliculasActivity : AppCompatActivity() {
                             putString("TOKEN", null)
                         }.apply()
 
-                        val intent = Intent(context, PeliculasActivity::class.java)
+                        val intent = Intent(context, LoginActivity::class.java)
                         startActivity(intent)
-
-
-                        //Separacion
-
-
-
-
                         Toast.makeText(this, "Sesion cerrada", Toast.LENGTH_SHORT).show()
                         finish()
                     }
@@ -134,10 +80,6 @@ class PeliculasActivity : AppCompatActivity() {
                 return true
 
             }
-
-
-
-
             else -> {
                 return super.onOptionsItemSelected(item)
             }
@@ -145,39 +87,48 @@ class PeliculasActivity : AppCompatActivity() {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    fun loadData() {
-
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-
-        val nombreL = sharedPreferences.getString("TOKEN",null)
-
-    }
-
-
      override fun onResume() {
          super.onResume()
+         val context = this
+         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
 
+         val Token ="Bearer " + sharedPreferences.getString("TOKEN",null)
+         Toast.makeText(context,Token, Toast.LENGTH_LONG).show()
+
+
+         val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas(Token)
+         llamadaAlApi.enqueue(object: Callback<List<Pelicula>>{
+             override fun onResponse(
+                 call: Call<List<Pelicula>>,
+                 response: Response<List<Pelicula>>
+
+             ) {
+                 if (response.isSuccessful){
+                     Toast.makeText(context,"Todo correcto", Toast.LENGTH_LONG).show()
+                 }else{
+                     val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+                     val editor = sharedPreferences.edit()
+                     editor.apply(){
+                         putString("TOKEN",null)
+                     }.apply()
+                     val intent = Intent(context, LoginActivity::class.java)
+                     startActivity(intent)
+                     finish()
+
+                 }
+                 var listaPeliculas: List<Pelicula>? = response.body()
+
+                 var adapter = ListaPeliculasAdapter(listaPeliculas,context)
+                 rvPeliculas.adapter = adapter
+
+                 //   Toast.makeText(context, listaPeliculas, Toast.LENGTH_SHORT).show()
+
+             }
+             override fun onFailure(call: Call<List<Pelicula>>, t: Throwable) {
+                 Log.d("Prueba",t.message.toString())
+
+             }
+         } )
      }
 
 }

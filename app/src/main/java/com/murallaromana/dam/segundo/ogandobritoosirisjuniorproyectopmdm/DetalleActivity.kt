@@ -42,7 +42,7 @@ class DetalleActivity : AppCompatActivity() {
     lateinit var etGeneroDetalle: EditText
     lateinit var etNumeroDirector: EditText
 
-    private lateinit var pelicula: Pelicula
+    private var pelicula: Pelicula? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,14 +56,14 @@ class DetalleActivity : AppCompatActivity() {
         etSinopsisDetalle = findViewById(R.id.tvSinopsisDetalles)
         etGeneroDetalle = findViewById(R.id.etGeneroDetalle)
         etDuracion = findViewById(R.id.etTiempoDuracion)
-        etUrl = findViewById(R.id.etGeneroDetalle)
+        etUrl = findViewById(R.id.etUrlDetalle)
         etNumeroDirector = findViewById(R.id.etNumeroDirector)
 
 
         val context = this
         ibLlamarDirectorD.setOnClickListener() {
 
-            val telefono = "tel:" + pelicula.numeroDirector
+            val telefono = "tel:" + pelicula?.numeroDirector
             startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(telefono)))
         }
         etTituloDetalle.isEnabled = false
@@ -93,17 +93,17 @@ class DetalleActivity : AppCompatActivity() {
 
         if (intent.extras?.get("pelicula") != null) {
             pelicula = intent.extras?.get("pelicula") as Pelicula
-            title = pelicula.titulo
-            etGeneroDetalle.setText(pelicula.genero)
-            etDirector.setText(pelicula.director)
-            etTituloDetalle.setText(pelicula.titulo)
-            etSinopsisDetalle.setText(pelicula.sinopsis)
-            etRating.setText(pelicula.rating)
-            etAñoPeliculaDetalle.setText(pelicula.año)
-            etDuracion.setText(pelicula.duracion)
-            etUrl.setText(pelicula.url)
+            title = pelicula?.titulo
+            etGeneroDetalle.setText(pelicula?.genero)
+            etDirector.setText(pelicula?.director)
+            etTituloDetalle.setText(pelicula?.titulo)
+            etSinopsisDetalle.setText(pelicula?.sinopsis)
+            etRating.setText(pelicula?.rating)
+            etAñoPeliculaDetalle.setText(pelicula?.año)
+            etDuracion.setText(pelicula?.duracion)
+            etUrl.setText(pelicula?.url)
 
-            Picasso.get().load(pelicula.url).into(ivCaratulaDetalle)
+            Picasso.get().load(pelicula?.url).into(ivCaratulaDetalle)
         } else {
             title = "nueva pelicula"
             etTituloDetalle.isEnabled = true
@@ -172,7 +172,7 @@ class DetalleActivity : AppCompatActivity() {
 
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                 val dialog = builder.setTitle("Eliminar pelicula")
-                    .setMessage("la pelicula " + pelicula.titulo + "sera eliminada. ¿Estas seguro?.")
+                    .setMessage("la pelicula " + pelicula?.titulo + "sera eliminada. ¿Estas seguro?.")
                     .setPositiveButton("Aceptar") { _, _ ->
                         App.peliculas.remove(pelicula)
 
@@ -181,25 +181,20 @@ class DetalleActivity : AppCompatActivity() {
 
                         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
                         val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
-                        val llamadaApi: Call<Pelicula> = RetrofictClient.apiRetrofit.getId(Token,pelicula.id)
+                        val llamadaApi: Call<Pelicula> = RetrofictClient.apiRetrofit.getId(Token,pelicula?.id)
                         llamadaApi.enqueue(object : Callback<Pelicula>{
                             override fun onResponse(
                                 call: Call<Pelicula>,
                                 response: Response<Pelicula>
                             ) {
-                                var id = response.body()?.id
-
                                 val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
                                 val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
-                                val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.borrar(Token,id)
+                                val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.borrar(Token,pelicula?.id)
                                 llamadaApi.enqueue(object : Callback<Unit>{
                                     override fun onResponse(
                                         call: Call<Unit>,
                                         response: Response<Unit>
                                     ) {
-
-
-
                                     }
                                     override fun onFailure(call: Call<Unit>, t: Throwable) {
                                         TODO("Not yet implemented")
@@ -210,13 +205,6 @@ class DetalleActivity : AppCompatActivity() {
                                 TODO("Not yet implemented")
                             }
                         })
-
-
-                         //Separacion
-
-
-
-
                         Toast.makeText(this, "Película Borrada", Toast.LENGTH_SHORT).show()
                         finish()
                     }
@@ -229,12 +217,9 @@ class DetalleActivity : AppCompatActivity() {
 
             R.id.action_guardar -> {
 
-
                 if (etTituloDetalle.text.toString().isEmpty() || etDuracion.text.toString()
                         .isEmpty() || etRating.text.toString().isEmpty()
                 ) {
-//
-
                     if (etTituloDetalle.text.toString().isEmpty()) {
                         etTituloDetalle.error = "El campo titulo no puede estar vacio"
                     }
@@ -245,7 +230,6 @@ class DetalleActivity : AppCompatActivity() {
                         etRating.error = "El campo rating no puede estar vacio"
                     }
 
-
                 } else {
 
 
@@ -253,7 +237,7 @@ class DetalleActivity : AppCompatActivity() {
 
                   val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
                     val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
-                    val llamadaApi: Call<Pelicula> = RetrofictClient.apiRetrofit.getId(Token,pelicula.id)
+                    val llamadaApi: Call<Pelicula> = RetrofictClient.apiRetrofit.getId(Token,pelicula?.id)
                     llamadaApi.enqueue(object : Callback<Pelicula>{
                         override fun onResponse(
                             call: Call<Pelicula>,
@@ -273,7 +257,7 @@ class DetalleActivity : AppCompatActivity() {
                                     etSinopsisDetalle.text.toString(),
                                     etDuracion.text.toString(),
                                     etNumeroDirector.text.toString(),
-                                    pelicula.id
+                                    pelicula?.id
                                 ), Token   )
                                 llamadaApi.enqueue(object : Callback<Unit>{
                                     override fun onResponse(
@@ -294,10 +278,6 @@ class DetalleActivity : AppCompatActivity() {
                                 val sharedPreferences =
                                     getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
                                 val Token = "Bearer " + sharedPreferences.getString("TOKEN", null)
-                                val retrofit = Retrofit.Builder()
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .baseUrl("https://damapi.herokuapp.com/api/v1/")
-                                    .build()
                                 val llamadaApi: Call<Unit> = RetrofictClient.apiRetrofit.create(
 
                                     //Terminar de rellenar con los editTexts
@@ -315,41 +295,27 @@ class DetalleActivity : AppCompatActivity() {
                                         null
                                     ), Token
                                 )
-
                                 llamadaApi.enqueue(object : Callback<Unit> {
                                     override fun onFailure(call: Call<Unit>, t: Throwable) {
                                         Log.d("respuesta: onFailure", t.toString())
                                         showAlert("Pelicula no añadia")
-
                                     }
-
                                     override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                                         Log.d("respuesta: onResponse", response.toString())
 
                                         if (response.code() > 299 || response.code() < 200) {
                                             showAlert("Error " + response.code().toString())
-
                                         } else {
-
                                             showAlert("Pelicula creada")
                                         }
                                     }
                                 })
-
-
                             }
                         }
-
                         override fun onFailure(call: Call<Pelicula>, t: Throwable) {
                            showAlert("Error en añadir")
-
-
-
                         }
-
                     })
-
-
                     etTituloDetalle.isEnabled = true
                     etGeneroDetalle.isEnabled = true
                     etSinopsisDetalle.isEnabled = true
@@ -359,25 +325,19 @@ class DetalleActivity : AppCompatActivity() {
                     etRating.isEnabled = true
                     etDuracion.isEnabled = true
                     etNumeroDirector.isEnabled = true
-
-
                 }
                 return true
             }
-
-
             else -> {
                 return super.onOptionsItemSelected(item)
             }
         }
     }
-
     private fun showAlert(message: String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Hola soy pavy")
+        builder.setTitle("ERROR")
         builder.setMessage(message)
         val dialog = builder.create()
         dialog.show()
     }
-
 }
