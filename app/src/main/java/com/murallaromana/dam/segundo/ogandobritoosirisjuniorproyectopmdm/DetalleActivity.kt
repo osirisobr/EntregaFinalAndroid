@@ -4,22 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Id
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.RetrofictClient
-import com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm.Retrofit.Token
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class DetalleActivity : AppCompatActivity() {
 
@@ -58,6 +58,21 @@ class DetalleActivity : AppCompatActivity() {
         etDuracion = findViewById(R.id.etTiempoDuracion)
         etUrl = findViewById(R.id.etUrlDetalle)
         etNumeroDirector = findViewById(R.id.etNumeroDirector)
+        var estado:Boolean = intent.extras?.get("estado") as Boolean
+        etNumeroDirector.isVisible = estado
+
+     /*   if (estado == true){
+            etNumeroDirector.isVisible = true
+
+        }else{
+            etNumeroDirector.isVisible = false
+        }
+
+        //    val extras = intent.extras
+
+
+*/
+
 
 
         val context = this
@@ -101,6 +116,7 @@ class DetalleActivity : AppCompatActivity() {
             etRating.setText(pelicula?.rating)
             etAñoPeliculaDetalle.setText(pelicula?.año)
             etDuracion.setText(pelicula?.duracion)
+            etNumeroDirector.setText(pelicula?.numeroDirector)
             etUrl.setText(pelicula?.url)
 
             Picasso.get().load(pelicula?.url).into(ivCaratulaDetalle)
@@ -125,8 +141,6 @@ class DetalleActivity : AppCompatActivity() {
             itemGuardar = menu.findItem(R.id.action_guardar)
             itemBorrar = menu.findItem(R.id.action_borrar)
             itemEditar = menu.findItem(R.id.action_editar)
-
-
         }
         return true
     }
@@ -150,7 +164,7 @@ class DetalleActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_editar -> {
 
-
+                etNumeroDirector.isVisible = true
                 etTituloDetalle.isEnabled = true
                 etGeneroDetalle.isEnabled = true
                 etSinopsisDetalle.isEnabled = true
@@ -332,36 +346,7 @@ class DetalleActivity : AppCompatActivity() {
                                             }
                                         }
                                     })
-
-
-
                                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     etTituloDetalle.isEnabled = true
                     etGeneroDetalle.isEnabled = true
                     etSinopsisDetalle.isEnabled = true

@@ -43,7 +43,10 @@ class PeliculasActivity : AppCompatActivity() {
 
         faButton.setOnClickListener() {
             val intent = Intent(this, DetalleActivity::class.java)
-            startActivity(intent) }
+            intent.putExtra("estado",true)
+            startActivity(intent)
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

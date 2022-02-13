@@ -36,13 +36,8 @@ class RegistroActivity : AppCompatActivity() {
         etContraseñaR=findViewById(R.id.etContraseñaR)
         val context = this
 
-        etEmail.setText("hola1@hotmail.com")
-        etContraseñaR.setText("1234")
 
         btHacerEfectivoRegistro.setOnClickListener(){
-           // saveData()
-           onBackPressed()
-
 
             var usuario = etEmail.text.toString()
             var contraseña = etContraseñaR.text.toString()
@@ -64,9 +59,7 @@ class RegistroActivity : AppCompatActivity() {
                         showAlert("Error al crear el usuario")
 
                     } else {
-
-
-                        Toast.makeText(context,"Usuario creado correctamente", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context,"Usuario creado correctamente", Toast.LENGTH_SHORT).show()
                         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
                         editor.apply(){
@@ -74,7 +67,8 @@ class RegistroActivity : AppCompatActivity() {
                         }.apply()
                         val intent = Intent(context, LoginActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        onBackPressed()
+                      
 
 
                     }
@@ -91,7 +85,15 @@ class RegistroActivity : AppCompatActivity() {
         }
 
     }
+    private fun showAlert(message: String){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("My preferences")
+        builder.setMessage(message)
+        val dialog = builder.create()
+        dialog.show()
+    }
 
+    // Codigo sobrante
     fun saveData(){
         val nombreR = etEmail.text.toString()
         val contraseñaR = etContraseñaR.text.toString()
@@ -103,16 +105,9 @@ class RegistroActivity : AppCompatActivity() {
         }.apply()
 
         Toast.makeText(this,"datos Guardados", Toast.LENGTH_SHORT).show()
-
     }
 
-    private fun showAlert(message: String){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("My preferences")
-        builder.setMessage(message)
-        val dialog = builder.create()
-        dialog.show()
-    }
+
 
 
 

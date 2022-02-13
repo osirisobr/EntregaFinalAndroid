@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:ems="10"
+        android:textColor="@color/white"
         android:inputType="textPersonName"
         android:hint="      Nombre Completo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,6 +26,7 @@
     <EditText
         android:id="@+id/etNombreR"
         android:layout_width="0dp"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margen_horizontal_entre_edTexts"
         android:layout_marginTop="44dp"
@@ -42,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:ems="10"
+        android:textColor="@color/white"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -54,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:ems="10"
+        android:textColor="@color/white"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -66,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:ems="10"
+        android:textColor="@color/white"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -90,6 +95,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="124dp"
         android:text="Nombre"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,6 +106,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="76dp"
         android:text="telefono"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -110,6 +117,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="52dp"
         android:text="Contraseña"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -120,6 +128,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="60dp"
         android:text="Correo"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -130,6 +139,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="72dp"
         android:text="Usuario"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

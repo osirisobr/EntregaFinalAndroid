@@ -40,6 +40,7 @@ class ListaPeliculasAdapter(val peliculas : List<Pelicula>?, val context: Contex
         val intent = Intent(holder.itemView.context, DetalleActivity::class.java)
         intent.putExtra("pelicula",Pelicula)
             intent.putExtra("id",Pelicula?.id)
+            intent.putExtra("estado",false)
         holder.itemView.context.startActivity(intent)
         }
 
