@@ -61,6 +61,7 @@ class DetalleActivity : AppCompatActivity() {
         var estado:Boolean = intent.extras?.get("estado") as Boolean
         etNumeroDirector.isVisible = estado
 
+
      /*   if (estado == true){
             etNumeroDirector.isVisible = true
 
@@ -285,19 +286,48 @@ class DetalleActivity : AppCompatActivity() {
                                         etNumeroDirector?.text.toString(),
                                         pelicula!!.id
                                     ), Token   )
+
+                                    val context = this
                                     llamadaApi.enqueue(object : Callback<Unit>{
                                         override fun onResponse(
                                             call: Call<Unit>,
                                             response: Response<Unit>
                                         ) {
-                                            showAlert("pelicula actualizada")
-                                            showAlert(response.code().toString())
 
-                                            finish()
+
+
+
+
+                                            if (response.isSuccessful){
+                                                showAlert("pelicula actualizada")
+                                                showAlert(response.code().toString())
+                                                finish()
+                                            }else {
+                                                val sharedPreferences = getSharedPreferences(
+                                                    "sharedPrefs",
+                                                    MODE_PRIVATE
+                                                )
+                                                val editor = sharedPreferences.edit()
+                                                editor.apply() {
+                                                    putString("TOKEN", null)
+                                                }.apply()
+                                                val intent = Intent(context, LoginActivity::class.java)
+                                                startActivity(intent)
+                                                finish()
+                                            }
+
+
+
+
+
+
+
+
+
                                         }
 
                                         override fun onFailure(call: Call<Unit>, t: Throwable) {
-                                            showAlert("Algo mal va mal en actualizar")
+                                            showAlert("Pelicula no actualizada")
                                         }
                                     })
 

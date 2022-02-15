@@ -1,9 +1,14 @@
 package com.murallaromana.dam.segundo.ogandobritoosirisjuniorproyectopmdm
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Entity
 data class Pelicula(
+
+    @PrimaryKey(autoGenerate = true) @Transient var idRoom: String,
 
     @SerializedName("title")  var titulo: String,
     @SerializedName("rating")  var rating: String,

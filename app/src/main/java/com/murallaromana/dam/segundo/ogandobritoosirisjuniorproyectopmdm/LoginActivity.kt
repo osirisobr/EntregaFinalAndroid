@@ -99,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
                     }.apply()
                     val intent = Intent(context, PeliculasActivity::class.java)
                     startActivity(intent)
+                    Toast.makeText(context,"Sesion Iniciada", Toast.LENGTH_LONG).show()
                     finish()
                 }
             }

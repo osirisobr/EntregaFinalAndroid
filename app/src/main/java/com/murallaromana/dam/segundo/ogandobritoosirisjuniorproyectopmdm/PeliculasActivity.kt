@@ -96,7 +96,6 @@ class PeliculasActivity : AppCompatActivity() {
          val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
 
          val Token ="Bearer " + sharedPreferences.getString("TOKEN",null)
-         Toast.makeText(context,Token, Toast.LENGTH_LONG).show()
 
 
          val llamadaAlApi: Call<List<Pelicula>> = RetrofictClient.apiRetrofit.getPeliculas(Token)
@@ -107,7 +106,7 @@ class PeliculasActivity : AppCompatActivity() {
 
              ) {
                  if (response.isSuccessful){
-                     Toast.makeText(context,"Todo correcto", Toast.LENGTH_LONG).show()
+
                  }else{
                      val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
                      val editor = sharedPreferences.edit()
