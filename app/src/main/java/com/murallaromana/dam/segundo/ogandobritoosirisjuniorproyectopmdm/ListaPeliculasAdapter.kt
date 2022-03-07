@@ -36,9 +36,10 @@ class ListaPeliculasAdapter(val peliculas : List<Pelicula>?, val context: Contex
         holder.tvDirector.setText(Pelicula?.director)
         holder.tvRating.setText(Pelicula?.rating)
         Picasso.get().load(Pelicula?.url).into(holder.ivCaratula)
+
         holder.itemView.setOnClickListener {
         val intent = Intent(holder.itemView.context, DetalleActivity::class.java)
-        intent.putExtra("pelicula",Pelicula)
+            intent.putExtra("pelicula",Pelicula)
             intent.putExtra("id",Pelicula?.id)
             intent.putExtra("estado",false)
         holder.itemView.context.startActivity(intent)

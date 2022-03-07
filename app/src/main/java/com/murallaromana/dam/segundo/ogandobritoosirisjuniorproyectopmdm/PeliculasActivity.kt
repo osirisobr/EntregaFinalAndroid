@@ -107,7 +107,7 @@ class PeliculasActivity : AppCompatActivity() {
 
              ) {
                  if (response.isSuccessful){
-                     Toast.makeText(context,"Todo correcto", Toast.LENGTH_LONG).show()
+                     Toast.makeText(context,"Sesion Iniciada", Toast.LENGTH_LONG).show()
                  }else{
                      val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
                      val editor = sharedPreferences.edit()
